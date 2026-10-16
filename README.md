@@ -1,10 +1,37 @@
-﻿# Live Wallpaper
+﻿<div align="center">
 
-Animated desktop wallpapers for Windows.
-Each one runs inside [Lively Wallpaper](https://github.com/rocksdanister/lively), a free and open-source app.
+<img src="assets/banner.jpg" alt="Claude Dunes and Clawd Dunes live wallpapers" width="100%">
+
+# Live Wallpaper
+
+**Animated desktop wallpapers for Windows.**
+
+Each one runs inside [Lively Wallpaper](https://github.com/rocksdanister/lively), a free and open-source app.<br>
 Every wallpaper also comes with still images, so you can use it without installing anything.
 
+<p>
+  <img alt="Platform: Windows 10 and 11" src="https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-D97757?style=flat-square">
+  <img alt="Made for Lively Wallpaper" src="https://img.shields.io/badge/made%20for-Lively%20Wallpaper-141413?style=flat-square">
+  <img alt="WebGL 2" src="https://img.shields.io/badge/WebGL-2-D97757?style=flat-square">
+  <a href="LICENSE"><img alt="License: PolyForm Noncommercial 1.0.0" src="https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-141413?style=flat-square"></a>
+  <img alt="Unofficial fan project" src="https://img.shields.io/badge/fan%20project-unofficial-D97757?style=flat-square">
+</p>
+
+<p>
+  <a href="#wallpapers">Wallpapers</a> ·
+  <a href="#what-you-need">What you need</a> ·
+  <a href="#how-to-use-a-live-wallpaper">How to use</a> ·
+  <a href="#no-lively-use-the-still-images">Still images</a> ·
+  <a href="#troubleshooting">Troubleshooting</a> ·
+  <a href="#license-and-notice">License</a>
+</p>
+
+</div>
+
+> [!NOTE]
 > Unofficial fan art. Not affiliated with or endorsed by Anthropic. See [License and notice](#license-and-notice).
+
+---
 
 ## Wallpapers
 
@@ -39,7 +66,10 @@ If the Microsoft Store install fails with an error code, use the direct download
 
 ### Step 2: Download the wallpaper
 
-Click the download link in the [table above](#wallpapers), or use the one from the wallpaper's own folder. You get a `.zip` file. **Don't unzip it.** Lively reads the zip as it is.
+Click the download link in the [table above](#wallpapers), or use the one from the wallpaper's own folder. You get a `.zip` file.
+
+> [!IMPORTANT]
+> **Don't unzip it.** Lively reads the zip as it is.
 
 ### Step 3: Add it to Lively
 
@@ -52,7 +82,8 @@ Click the download link in the [table above](#wallpapers), or use the one from t
 
 Click the wallpaper's tile in Lively's library. It becomes your desktop background straight away.
 
-To see it, minimize your windows or press **Win + D**.
+> [!TIP]
+> To see it, minimize your windows or press **Win + D**.
 
 ### Step 5: Change the settings (optional)
 
@@ -77,14 +108,41 @@ If your screen has a different shape, open **Settings > Personalization > Backgr
 
 ## Troubleshooting
 
-**The wallpaper doesn't move.** Lively pauses wallpapers by design when another window is maximized or covering the desktop, and on battery power if you've enabled that. Minimize your windows or press **Win + D** and it will start moving. You can change these rules in Lively's settings.
+<details>
+<summary><b>The wallpaper doesn't move.</b></summary>
 
-**It uses too much battery or GPU.** Right-click the tile, choose **Customise**, and set **Frame rate** to **15 fps (battery saver)**.
+<br>
 
-**The wallpaper looks plain or flat.** Your graphics driver may not support WebGL 2, so you're seeing the fallback version. Updating your graphics driver usually fixes it.
+Lively pauses wallpapers by design when another window is maximized or covering the desktop, and on battery power if you've enabled that. Minimize your windows or press **Win + D** and it will start moving. You can change these rules in Lively's settings.
 
-**The tile doesn't appear after adding the zip.** Close Lively fully from its tray icon (right-click > **Exit**), then open it again.
+</details>
 
+<details>
+<summary><b>It uses too much battery or GPU.</b></summary>
+
+<br>
+
+Right-click the tile, choose **Customise**, and set **Frame rate** to **15 fps (battery saver)**.
+
+</details>
+
+<details>
+<summary><b>The wallpaper looks plain or flat.</b></summary>
+
+<br>
+
+Your graphics driver may not support WebGL 2, so you're seeing the fallback version. Updating your graphics driver usually fixes it.
+
+</details>
+
+<details>
+<summary><b>The tile doesn't appear after adding the zip.</b></summary>
+
+<br>
+
+Close Lively fully from its tray icon (right-click > **Exit**), then open it again.
+
+</details>
 
 ## License and notice
 
