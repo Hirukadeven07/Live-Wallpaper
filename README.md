@@ -1,6 +1,6 @@
 ﻿# Live Wallpaper
 
-Animated desktop wallpapers for Windows, made by [Hirukadeven07](https://github.com/Hirukadeven07).
+Animated desktop wallpapers for Windows.
 Each one runs inside [Lively Wallpaper](https://github.com/rocksdanister/lively), a free and open-source app.
 Every wallpaper also comes with still images, so you can use it without installing anything.
 
