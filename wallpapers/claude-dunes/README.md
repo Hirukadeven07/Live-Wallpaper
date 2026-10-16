@@ -35,4 +35,4 @@ All are 2560 x 1600.
 
 ## Notes
 
-The spark shape belongs to Anthropic. This is an unofficial fan wallpaper for personal use. See the [notices](../../README.md#notice).
+The spark shape belongs to Anthropic. This is an unofficial fan wallpaper for personal use. See the [notices](../../README.md#license-and-notice).

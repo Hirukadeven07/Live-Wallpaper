@@ -4,7 +4,7 @@ Animated desktop wallpapers for Windows, made by [Hirukadeven07](https://github.
 Each one runs inside [Lively Wallpaper](https://github.com/rocksdanister/lively), a free and open-source app.
 Every wallpaper also comes with still images, so you can use it without installing anything.
 
-> Unofficial fan art. Not affiliated with or endorsed by Anthropic. See [Notice](#notice).
+> Unofficial fan art. Not affiliated with or endorsed by Anthropic. See [License and notice](#license-and-notice).
 
 ## Wallpapers
 
@@ -86,6 +86,8 @@ If your screen has a different shape, open **Settings > Personalization > Backgr
 **The tile doesn't appear after adding the zip.** Close Lively fully from its tray icon (right-click > **Exit**), then open it again.
 
 
-## Notice
+## License and notice
 
-These are unofficial fan wallpapers for personal use. The spark shape in **Claude Dunes** and the Clawd character in **Clawd Dunes** belong to Anthropic, which is not affiliated with or endorsing this project. Please don't sell them or use them commercially.
+These are unofficial fan wallpapers. You can use and share them for noncommercial purposes under the [PolyForm Noncommercial License 1.0.0](LICENSE).
+
+The Claude spark and the Clawd character belong to Anthropic, which is not affiliated with or endorsing this project, and they are not covered by that license. Keep them to personal use. Details are in [NOTICE.md](NOTICE.md).

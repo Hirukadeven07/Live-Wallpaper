@@ -38,4 +38,4 @@ All are 2560 x 1600.
 
 ## Notes
 
-Clawd's sprites and idle moves come from the Claude desktop app, and the character belongs to Anthropic. The laptop, desktop computer, looking around and thinking moves are used as extra idle moves in this wallpaper. This is an unofficial fan wallpaper for personal use. See the [notices](../../README.md#notice).
+Clawd's sprites and idle moves come from the Claude desktop app, and the character belongs to Anthropic. The laptop, desktop computer, looking around and thinking moves are used as extra idle moves in this wallpaper. This is an unofficial fan wallpaper for personal use. See the [notices](../../README.md#license-and-notice).
