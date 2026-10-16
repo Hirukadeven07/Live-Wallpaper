@@ -1,0 +1,14 @@
+{
+  "AppVersion": "1.0.0.0",
+  "Title": "Clawd Desk Buddy",
+  "Thumbnail": "thumbnail.png",
+  "Preview": null,
+  "Desc": "A tiny Clawd who lives on your desktop: follows your cursor, reacts to clicks, taps the clock and battery on the taskbar, and naps when you're away.",
+  "Author": "Claude",
+  "License": "Personal use",
+  "Contact": "",
+  "Type": 1,
+  "FileName": "index.html",
+  "Arguments": "--pause-event true",
+  "IsAbsolutePath": false
+}
