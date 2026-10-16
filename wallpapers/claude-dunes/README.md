@@ -1,4 +1,4 @@
-# Claude Dunes
+﻿# Claude Dunes
 
 A clay-orange spark rising over five layers of slowly drifting dunes. The sky follows your Windows theme (or the time of day), with stars at night.
 
@@ -35,4 +35,4 @@ All are 2560 x 1600.
 
 ## Notes
 
-The spark shape belongs to Anthropic. This is an unofficial fan wallpaper for personal use. See the [notices](../../README.md#credits-and-notices).
+The spark shape belongs to Anthropic. This is an unofficial fan wallpaper for personal use. See the [notices](../../README.md#notice).

@@ -1,10 +1,10 @@
-# Live Wallpaper
+﻿# Live Wallpaper
 
 Animated desktop wallpapers for Windows, made by [Hirukadeven07](https://github.com/Hirukadeven07).
 Each one runs inside [Lively Wallpaper](https://github.com/rocksdanister/lively), a free and open-source app.
 Every wallpaper also comes with still images, so you can use it without installing anything.
 
-> Unofficial fan art. Not affiliated with or endorsed by Anthropic. See [Credits and notices](#credits-and-notices).
+> Unofficial fan art. Not affiliated with or endorsed by Anthropic. See [Notice](#notice).
 
 ## Wallpapers
 
@@ -85,36 +85,7 @@ If your screen has a different shape, open **Settings > Personalization > Backgr
 
 **The tile doesn't appear after adding the zip.** Close Lively fully from its tray icon (right-click > **Exit**), then open it again.
 
-**Windows asks about firewall or unknown apps.** Lively is the app that runs the wallpaper. The wallpapers in this repo are plain web pages that run on your PC and don't connect to the internet.
 
-## For the repo owner: adding a new wallpaper
+## Notice
 
-Give every wallpaper its own folder under `wallpapers/`, named in lowercase with hyphens:
-
-```text
-wallpapers/
-  your-wallpaper/
-    README.md              what it is, its settings, credits
-    Your-Wallpaper.zip     the file friends download (contents of source/, zipped)
-    source/
-      index.html           the wallpaper page
-      LivelyInfo.json      title, description, thumbnail name
-      LivelyProperties.json  the Customise options
-      thumbnail.png        640 x 360 preview
-    still-images/
-      your-wallpaper-night.png
-      your-wallpaper-day.png
-```
-
-Then:
-
-1. Zip the **contents** of `source/` (the files themselves, not the folder) to make `Your-Wallpaper.zip`. Check that `LivelyInfo.json` is at the top level of the zip.
-2. Add a row to the [Wallpapers table](#wallpapers) with a preview image and the download link:
-   `https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/your-wallpaper/Your-Wallpaper.zip`
-3. Commit and push.
-
-## Credits and notices
-
-- Wallpapers are built for [Lively Wallpaper](https://github.com/rocksdanister/lively) by rocksdanister (GPL-3.0). This repo doesn't include or redistribute Lively.
-- The spark shape in **Claude Dunes** and the Clawd character, sprites and movements in **Clawd Dunes** belong to Anthropic. The Clawd sprite frames and idle behavior were taken from the Claude desktop app. These wallpapers are unofficial, made by a fan for personal use, and aren't affiliated with or endorsed by Anthropic. Please don't sell them or use them commercially.
-- If you represent the owner of any artwork here and want it removed, open an issue and it will be taken down.
+These are unofficial fan wallpapers for personal use. The spark shape in **Claude Dunes** and the Clawd character in **Clawd Dunes** belong to Anthropic, which is not affiliated with or endorsing this project. Please don't sell them or use them commercially.

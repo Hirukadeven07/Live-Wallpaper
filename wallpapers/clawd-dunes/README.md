@@ -1,4 +1,4 @@
-# Clawd Dunes
+﻿# Clawd Dunes
 
 Clawd, the Claude Code mascot, living on the dunes. He walks in from the left, waves, then wanders. Now and then he sways, turns around, dances, break-dances, meditates, looks around, thinks, or sits down at a laptop or a desktop computer. The sky follows your Windows theme (or the time of day).
 
@@ -38,4 +38,4 @@ All are 2560 x 1600.
 
 ## Notes
 
-Clawd's sprites and idle moves come from the Claude desktop app, and the character belongs to Anthropic. The laptop, desktop computer, looking around and thinking moves are used as extra idle moves in this wallpaper. This is an unofficial fan wallpaper for personal use. See the [notices](../../README.md#credits-and-notices).
+Clawd's sprites and idle moves come from the Claude desktop app, and the character belongs to Anthropic. The laptop, desktop computer, looking around and thinking moves are used as extra idle moves in this wallpaper. This is an unofficial fan wallpaper for personal use. See the [notices](../../README.md#notice).
