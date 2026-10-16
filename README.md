@@ -39,6 +39,7 @@ Every wallpaper also comes with still images, so you can use it without installi
 | --- | --- | --- | --- |
 | <a href="wallpapers/claude-dunes"><img src="wallpapers/claude-dunes/source/thumbnail.png" width="260" alt="Claude Dunes"></a> | **[Claude Dunes](wallpapers/claude-dunes)** | A clay-orange spark rising over slowly drifting dunes. Day, sunset and night looks. | [**Claude-Dunes.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/claude-dunes/Claude-Dunes.zip) |
 | <a href="wallpapers/clawd-dunes"><img src="wallpapers/clawd-dunes/source/thumbnail.png" width="260" alt="Clawd Dunes"></a> | **[Clawd Dunes](wallpapers/clawd-dunes)** | Clawd, the Claude Code mascot, wandering the same dunes. He walks, waves, dances, meditates and sits down at a laptop. | [**Clawd-Dunes.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-dunes/Clawd-Dunes.zip) |
+| <a href="wallpapers/clawd-desk-buddy"><img src="wallpapers/clawd-desk-buddy/source/thumbnail.png" width="260" alt="Clawd Desk Buddy"></a> | **[Clawd Desk Buddy](wallpapers/clawd-desk-buddy)** | A tiny Clawd who lives on your desktop. He follows your cursor, reacts to clicks, taps the clock and battery on the taskbar, and naps when you're away. Five backgrounds, or use your own picture. | [**Clawd-Desk-Buddy.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-desk-buddy/Clawd-Desk-Buddy.zip) |
 
 Click a wallpaper's name to see its settings and still images.
 
@@ -91,6 +92,7 @@ Right-click the wallpaper's tile in Lively and choose **Customise**. The options
 
 - [Claude Dunes settings](wallpapers/claude-dunes#settings)
 - [Clawd Dunes settings](wallpapers/clawd-dunes#settings)
+- [Clawd Desk Buddy settings](wallpapers/clawd-desk-buddy#settings)
 
 ### Go back to your old wallpaper
 
@@ -98,7 +100,7 @@ In Lively, right-click the wallpaper that is playing and choose **Close wallpape
 
 ## No Lively? Use the still images
 
-Each wallpaper folder has a `still-images` folder with night, day and sunset pictures (2560 x 1600). To use one:
+Each wallpaper folder has a `still-images` folder with three pictures (2560 x 1600). To use one:
 
 1. Open the wallpaper's folder on GitHub and open the `still-images` folder.
 2. Click an image, then click the download button (the arrow icon) on the right.
@@ -114,6 +116,15 @@ If your screen has a different shape, open **Settings > Personalization > Backgr
 <br>
 
 Lively pauses wallpapers by design when another window is maximized or covering the desktop, and on battery power if you've enabled that. Minimize your windows or press **Win + D** and it will start moving. You can change these rules in Lively's settings.
+
+</details>
+
+<details>
+<summary><b>Clawd Desk Buddy doesn't react to my cursor or clicks.</b></summary>
+
+<br>
+
+Lively only passes the mouse to a wallpaper when you allow it. Open Lively's **Settings**, go to **Wallpaper**, and set **Wallpaper input** to **Mouse**. The wallpaper only sees the mouse while it's over the desktop, not over other windows.
 
 </details>
 

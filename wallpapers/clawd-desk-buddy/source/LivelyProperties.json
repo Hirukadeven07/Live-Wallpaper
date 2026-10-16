@@ -1,0 +1,79 @@
+{
+  "scene": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Background",
+    "items": ["Paper", "Graph paper", "Midnight terminal", "Dunes", "Clay glow", "Your own picture"]
+  },
+  "picture": {
+    "type": "folderDropdown",
+    "value": "claude-dunes-sunset.jpg",
+    "text": "Your own picture (pick Background: Your own picture)",
+    "filter": "*.jpg|*.jpeg|*.png|*.webp|*.bmp",
+    "folder": "pictures"
+  },
+  "theme": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Appearance",
+    "items": ["Match Windows", "Light", "Dark", "Follow the clock (day 7:30 to 18:00)"]
+  },
+  "size": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Clawd size",
+    "items": ["Tiny", "Small", "Medium"]
+  },
+  "roam": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Where Clawd walks",
+    "items": ["The whole screen", "Only along the taskbar"]
+  },
+  "cursor": {
+    "type": "dropdown",
+    "value": 2,
+    "text": "Your cursor",
+    "items": ["Ignore it", "Look at it", "Follow it when it stops", "Chase it everywhere"]
+  },
+  "clicks": {
+    "type": "dropdown",
+    "value": 2,
+    "text": "Your clicks",
+    "items": ["Ignore them", "React to them", "React and run to them"]
+  },
+  "visits": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Taskbar visits (clock and battery)",
+    "items": ["Never", "Sometimes", "Often"]
+  },
+  "taskbar": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Taskbar height",
+    "items": ["Auto", "Hidden (auto-hide)", "Small (40 px)", "Standard (48 px)", "Large (56 px)", "Extra large (64 px)"]
+  },
+  "sleep": {
+    "type": "dropdown",
+    "value": 2,
+    "text": "Naps when the mouse is idle",
+    "items": ["Never", "After 1 minute", "After 3 minutes", "After 5 minutes", "After 10 minutes"]
+  },
+  "sysinfo": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Reacts to the hour and to your battery"
+  },
+  "bubbles": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Speech bubbles"
+  },
+  "fps": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Frame rate",
+    "items": ["15 fps (battery saver)", "30 fps", "60 fps"]
+  }
+}
