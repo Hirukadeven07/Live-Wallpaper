@@ -1,0 +1,14 @@
+{
+  "AppVersion": "1.0.0.0",
+  "Title": "Clawd Dunes",
+  "Thumbnail": "thumbnail.png",
+  "Preview": null,
+  "Desc": "Clawd, the Claude Code mascot, wanders the dunes: walks, waves, dances, meditates and sits down at a laptop. Follows Windows light or dark mode, or the time of day.",
+  "Author": "Claude",
+  "License": "Personal use",
+  "Contact": "",
+  "Type": 1,
+  "FileName": "index.html",
+  "Arguments": "--pause-event true",
+  "IsAbsolutePath": false
+}

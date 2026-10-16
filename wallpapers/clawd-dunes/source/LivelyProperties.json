@@ -1,0 +1,48 @@
+{
+  "theme": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Appearance",
+    "items": ["Match Windows", "Light", "Dark", "Follow the clock (day 7:30 to 18:00)"]
+  },
+  "clawd": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Show Clawd"
+  },
+  "size": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Clawd size",
+    "items": ["Small", "Medium", "Large"]
+  },
+  "cursor": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Clawd turns toward your cursor"
+  },
+  "motion": {
+    "type": "slider",
+    "value": 100,
+    "min": 0,
+    "max": 300,
+    "step": 10,
+    "text": "Dune motion (%)"
+  },
+  "fps": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Frame rate",
+    "items": ["15 fps (battery saver)", "30 fps", "60 fps"]
+  },
+  "stars": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Stars at night"
+  },
+  "grain": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Paper grain"
+  }
+}

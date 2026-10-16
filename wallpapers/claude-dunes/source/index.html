@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Dunes</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #141413; }
+  @media (prefers-color-scheme: light) { html, body { background: #F0EEE6; } }
+  #wall, #fallback { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  #fallback { display: none; }
+  #fallback svg { display: block; width: 100%; height: 100%; }
+  .no-gl #wall { display: none; }
+  .no-gl #fallback { display: block; }
+</style>
+</head>
+<body>
+<canvas id="wall" aria-hidden="true"></canvas>
+<div id="fallback" aria-hidden="true"></div>
+<script>
+(() => {
+  'use strict';
+
+  /* ---------- helpers ---------- */
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const smooth01 = t => { t = clamp(t, 0, 1); return t * t * (3 - 2 * t); };
+  const clampInt = (v, a, b) => { const n = Math.round(Number(v)); return Number.isFinite(n) ? clamp(n, a, b) : a; };
+  const asBool = v => v === true || v === 'true' || v === 1 || v === '1';
+  const TAU = Math.PI * 2;
+
+  /* ---------- settings ----------
+     Lively's Customise panel sends these through livelyPropertyListener (see LivelyProperties.json).
+     theme: 0 match Windows, 1 light, 2 dark, 3 follow the clock. */
+  const FPS = [15, 30, 60];
+  const S = { theme: 0, motion: 1, fps: 30, stars: true, grain: true };
+  let hourOverride = null;
+  // For previewing in a browser, e.g. index.html#theme=3&hour=18.7
+  try {
+    const q = new URLSearchParams(location.hash.slice(1));
+    if (q.has('theme')) S.theme = clampInt(q.get('theme'), 0, 3);
+    if (q.has('motion')) S.motion = Math.max(0, Number(q.get('motion')) || 0) / 100;
+    if (q.has('fps')) S.fps = FPS[clampInt(q.get('fps'), 0, 2)];
+    if (q.has('hour')) hourOverride = clamp(Number(q.get('hour')) || 0, 0, 24);
+  } catch (e) { /* no hash */ }
+
+  /* ---------- day and night ---------- */
+  const mqDark = matchMedia('(prefers-color-scheme: dark)');
+  function clockDark() {
+    const d = new Date();
+    const h = hourOverride != null ? hourOverride : d.getHours() + d.getMinutes() / 60 + d.getSeconds() / 3600;
+    if (h < 6) return 1;
+    if (h < 7.5) return 1 - smooth01((h - 6) / 1.5);     // dawn
+    if (h < 18) return 0;
+    if (h < 19.5) return smooth01((h - 18) / 1.5);       // dusk
+    return 1;
+  }
+  function targetDark() {
+    if (S.theme === 1) return 0;
+    if (S.theme === 2) return 1;
+    if (S.theme === 3) return clockDark();
+    return mqDark.matches ? 1 : 0;
+  }
+  let dark = targetDark();
+
+  /* ---------- the spark: twelve tapered rays of uneven length ---------- */
+  const RAY_LEN = [1.0, 0.76, 0.9, 0.68, 0.95, 0.8, 0.72, 0.97, 0.78, 0.87, 0.7, 0.9];
+  const RAY_JIT = [0.0, 0.07, -0.05, 0.1, -0.035, 0.05, -0.09, 0.035, -0.07, 0.09, -0.017, 0.05];
+
+  /* ---------- WebGL renderer ---------- */
+  const VS = `#version 300 es
+void main() {
+  vec2 p = vec2(float((gl_VertexID << 1) & 2), float(gl_VertexID & 2));
+  gl_Position = vec4(p * 2.0 - 1.0, 0.0, 1.0);
+}`;
+
+  // Phases are computed on the CPU in double precision and wrapped, so the motion stays smooth
+  // however long the wallpaper runs.
+  const FS = `#version 300 es
+precision highp float;
+uniform vec2 uRes;
+uniform float uDark;
+uniform vec3 uSun;
+uniform float uRot;
+uniform float uTw;
+uniform float uPh[10];
+uniform float uStars;
+uniform float uGrain;
+out vec4 fragColor;
+
+const float LEN[12] = float[12](1.0, 0.76, 0.9, 0.68, 0.95, 0.8, 0.72, 0.97, 0.78, 0.87, 0.7, 0.9);
+const float JIT[12] = float[12](0.0, 0.07, -0.05, 0.1, -0.035, 0.05, -0.09, 0.035, -0.07, 0.09, -0.017, 0.05);
+
+float hash12(vec2 p) {
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
+}
+// 1 at x <= a, 0 at x >= b (a < b), i.e. a falling smoothstep with edge0 < edge1 as GLSL requires
+float fall(float a, float b, float x) { return 1.0 - smoothstep(a, b, x); }
+float sdUnevenCapsule(vec2 p, float r1, float r2, float h) {
+  p.x = abs(p.x);
+  float b = (r1 - r2) / h;
+  float a = sqrt(1.0 - b * b);
+  float k = dot(p, vec2(-b, a));
+  if (k < 0.0) return length(p) - r1;
+  if (k > a * h) return length(p - vec2(0.0, h)) - r2;
+  return dot(p, vec2(a, b)) - r1;
+}
+float sdSpark(vec2 p, float R, float rot) {
+  float lp = length(p);
+  if (lp > R * 2.2) return lp - R * 0.95;
+  float d = lp - R * 0.15;
+  for (int i = 0; i < 12; i++) {
+    float a = rot + float(i) * 0.5235988 + JIT[i];
+    vec2 dir = vec2(cos(a), sin(a));
+    vec2 q = vec2(dot(p, vec2(dir.y, -dir.x)), dot(p, dir));
+    d = min(d, sdUnevenCapsule(q, R * 0.105, R * 0.052, R * LEN[i] * 0.9));
+  }
+  return d;
+}
+float dune(float x, int i) {
+  float fi = float(i);
+  float base = -0.035 - fi * 0.092;
+  float amp = 0.026 + 0.007 * fi;
+  float ph = fi * 1.93;
+  return base + amp * (0.62 * sin(x * (2.1 + 0.6 * fi) + ph + uPh[i * 2])
+                     + 0.38 * sin(x * (4.9 + 1.1 * fi) - ph * 1.37 - uPh[i * 2 + 1]));
+}
+vec3 duneCol(int i, float n) {
+  vec3 L = vec3(0.937, 0.871, 0.765);
+  vec3 D = vec3(0.176, 0.160, 0.148);
+  if (i == 1) { L = vec3(0.902, 0.769, 0.627); D = vec3(0.146, 0.133, 0.123); }
+  if (i == 2) { L = vec3(0.847, 0.635, 0.498); D = vec3(0.120, 0.110, 0.101); }
+  if (i == 3) { L = vec3(0.788, 0.471, 0.353); D = vec3(0.097, 0.089, 0.082); }
+  if (i == 4) { L = vec3(0.627, 0.333, 0.239); D = vec3(0.072, 0.067, 0.062); }
+  return mix(L, D, n);
+}
+
+void main() {
+  vec2 P = (gl_FragCoord.xy - 0.5 * uRes) / uRes.y;
+  float px = 1.0 / uRes.y;
+  float dk = clamp(uDark, 0.0, 1.0);
+  float dusk = 4.0 * dk * (1.0 - dk);       // peaks halfway between day and night
+  float nTop = smoothstep(0.0, 0.6, dk);    // the upper sky darkens first
+  float nHor = smoothstep(0.25, 1.0, dk);   // the horizon holds its light longer
+  float nLand = smoothstep(0.0, 0.7, dk);   // dunes turn to silhouettes early
+
+  vec3 top = mix(vec3(0.960, 0.945, 0.914), vec3(0.058, 0.057, 0.054), nTop);
+  vec3 hor = mix(vec3(0.957, 0.851, 0.757), vec3(0.160, 0.114, 0.090), nHor);
+  top = mix(top, vec3(0.30, 0.20, 0.22), dusk * 0.5);
+  hor = mix(hor, vec3(0.88, 0.50, 0.36), dusk * 0.7);
+  vec3 col = mix(top, hor, fall(-0.12, 0.52, P.y));
+
+  float sr = length(P - uSun.xy);
+  vec3 glow = mix(vec3(0.973, 0.776, 0.651), vec3(0.45, 0.19, 0.11), dk);
+  col = mix(col, glow, exp(-sr / (uSun.z * 1.5)) * (0.58 + 0.08 * dusk));
+
+  float starAmt = uStars * smoothstep(0.45, 0.95, dk);
+  if (starAmt > 0.002) {
+    vec2 g = P * 68.0;
+    vec2 id = floor(g);
+    vec2 f = fract(g) - 0.5;
+    float h = hash12(id);
+    if (h > 0.9) {
+      vec2 o = vec2(hash12(id + 17.3), hash12(id + 41.9)) - 0.5;
+      float sd = length(f - o * 0.6);
+      float tw = 0.55 + 0.45 * sin(uTw * (0.6 + 2.0 * h) + h * 60.0);
+      col += starAmt * fall(0.0, 0.1, sd) * tw * smoothstep(-0.02, 0.22, P.y) * vec3(1.0, 0.93, 0.86) * 0.85;
+    }
+  }
+
+  float s = sdSpark(P - uSun.xy, uSun.z, uRot);
+  vec3 sc = mix(vec3(0.851, 0.467, 0.341), vec3(0.906, 0.533, 0.392), dk);
+  sc = mix(sc, vec3(1.0, 0.66, 0.46), dusk * 0.55);   // brighter at sunset so it reads against the glow
+  sc *= 0.93 + 0.11 * clamp((P.y - uSun.y) / uSun.z * 0.5 + 0.5, 0.0, 1.0);
+  col += dk * vec3(0.85, 0.36, 0.2) * exp(-max(s, 0.0) / (uSun.z * 0.16)) * 0.42;
+  col = mix(col, sc, fall(-px, px, s));
+
+  for (int i = 0; i < 5; i++) {
+    float e = P.y - dune(P.x, i);
+    col *= 1.0 - exp(-max(e, 0.0) / 0.02) * step(0.0, e) * mix(0.085, 0.3, nLand);
+    vec3 lc = duneCol(i, nLand);
+    lc = mix(lc, lc * vec3(1.15, 0.92, 0.82), dusk * 0.5);
+    float below = max(-e, 0.0);
+    lc *= 1.0 - mix(0.09, 0.12, nLand) * smoothstep(0.0, 0.16, below);
+    float rim = exp(-below / (1.4 * px));
+    lc = mix(lc, mix(vec3(1.0, 0.975, 0.94), vec3(0.88, 0.48, 0.34), nLand), rim * mix(0.34, 0.7, nLand));
+    col = mix(col, lc, fall(-px, px, e));
+  }
+
+  col += (hash12(gl_FragCoord.xy) - 0.5) * uGrain;
+  fragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
+}`;
+
+  const canvas = document.getElementById('wall');
+  let gl = null, prog = null, U = null, vao = null, glOK = false;
+
+  function compile(type, src) {
+    const sh = gl.createShader(type);
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(sh) || 'shader compile failed');
+    return sh;
+  }
+  function initGL() {
+    try {
+      if (!gl) gl = canvas.getContext('webgl2', { antialias: false, alpha: false, depth: false, stencil: false, premultipliedAlpha: false, preserveDrawingBuffer: false, powerPreference: 'low-power' });
+      if (!gl) return false;
+      prog = gl.createProgram();
+      gl.attachShader(prog, compile(gl.VERTEX_SHADER, VS));
+      gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FS));
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog) || 'program link failed');
+      U = {};
+      ['uRes', 'uDark', 'uSun', 'uRot', 'uTw', 'uPh', 'uStars', 'uGrain'].forEach(n => { U[n] = gl.getUniformLocation(prog, n); });
+      vao = gl.createVertexArray();
+      return true;
+    } catch (e) {
+      console.warn('[Claude Dunes] WebGL 2 is unavailable, showing a still image instead.', e);
+      return false;
+    }
+  }
+
+  /* ---------- layout ---------- */
+  let sun = [0.29, 0.07, 0.2];
+  // The spark sits on the right third so desktop icons on the left stay on calm sky.
+  function sunFor(aspect) {
+    if (aspect >= 1) return [Math.min(0.18 * aspect, 0.5 * aspect - 0.24), 0.07, 0.2];
+    return [0, 0.16, clamp(0.21 * aspect, 0.1, 0.2)];
+  }
+  let dirty = true;
+  function resize() {
+    const w = window.innerWidth || 1, h = window.innerHeight || 1;
+    const dpr = window.devicePixelRatio || 1;
+    let W = Math.round(w * dpr), H = Math.round(h * dpr);
+    const maxPx = 3840 * 2160;
+    if (W * H > maxPx) { const k = Math.sqrt(maxPx / (W * H)); W = Math.round(W * k); H = Math.round(H * k); }
+    W = Math.max(2, W); H = Math.max(2, H);
+    if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
+    sun = sunFor(W / H);
+    dirty = true;
+  }
+
+  /* ---------- drawing ---------- */
+  // Start from the wall clock so the scene does not reset to the same frame at every sign-in.
+  let simTime = (Date.now() / 1000) % 100000;
+  const phases = new Float32Array(10);
+  function draw() {
+    for (let i = 0; i < 5; i++) {
+      phases[i * 2] = (simTime * (0.045 + 0.011 * i)) % TAU;
+      phases[i * 2 + 1] = (simTime * (0.03 + 0.009 * i)) % TAU;
+    }
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.useProgram(prog);
+    gl.bindVertexArray(vao);
+    gl.uniform2f(U.uRes, canvas.width, canvas.height);
+    gl.uniform1f(U.uDark, dark);
+    gl.uniform3f(U.uSun, sun[0], sun[1], sun[2]);
+    gl.uniform1f(U.uRot, (simTime * 0.02) % TAU);
+    gl.uniform1f(U.uTw, simTime % 3600);
+    gl.uniform1fv(U.uPh, phases);
+    gl.uniform1f(U.uStars, S.stars ? 1 : 0);
+    gl.uniform1f(U.uGrain, S.grain ? 0.022 : 0.005);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+
+  let lastDraw = 0, paused = false;
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (!glOK) return;
+    if (paused && !dirty) return;
+    if (!dirty && now - lastDraw < (1000 / S.fps) * 0.94) return;
+    const dt = lastDraw ? Math.min(0.25, (now - lastDraw) / 1000) : 0;
+    lastDraw = now;
+    const target = targetDark();
+    const settled = dark === target;
+    if (!settled) {
+      dark = target + (dark - target) * Math.exp(-dt * 2.2);
+      if (Math.abs(dark - target) < 0.001) dark = target;
+    }
+    if (!paused) simTime += dt * S.motion;
+    if (!dirty && settled && S.motion === 0) return;  // nothing moves: skip the GPU work
+    draw();
+    dirty = false;
+  }
+
+  /* ---------- still fallback when WebGL 2 is missing ---------- */
+  const fallback = document.getElementById('fallback');
+  const r2 = v => Math.round(v * 100) / 100;
+  function rayPath(R, i) {
+    const L = r2(R * RAY_LEN[i] * 0.9), a = r2(R * 0.105), b = r2(R * 0.052);
+    return `M${-a} 0L${-b} ${-L}A${b} ${b} 0 0 1 ${b} ${-L}L${a} 0A${a} ${a} 0 0 1 ${-a} 0Z`;
+  }
+  function waveD(y, a, ph, W, H) {
+    const n = 5, s = W / n;
+    let d = `M0 ${r2(y)} Q${r2(s / 2)} ${r2(y - a * (1 + 0.3 * Math.sin(ph)))} ${r2(s)} ${r2(y + a * 0.2 * Math.sin(ph * 2))}`;
+    for (let i = 2; i <= n; i++) d += ` T${r2(i * s)} ${r2(y + a * 0.35 * Math.sin(ph + i * 1.7))}`;
+    return d + ` V${H} H0Z`;
+  }
+  function showFallback() {
+    const night = targetDark() >= 0.5;
+    const c = night
+      ? { sky: ['#111110', '#2A1E18'], glow: '#5A2A1A', sun: '#E2865F', dunes: ['#2D2926', '#252220', '#1E1C1A', '#181614', '#121110'] }
+      : { sky: ['#F6F1E8', '#F3D7C2'], glow: '#F7C8AA', sun: '#D97757', dunes: ['#EFE0C6', '#E5C6A3', '#D7A281', '#BF7052', '#A0553D'] };
+    const W = 160, H = 100, sx = 109, sy = 43, sr = 19, ys = [55, 64, 73, 82, 91];
+    let svg = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">`
+      + `<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c.sky[0]}"/><stop offset="1" stop-color="${c.sky[1]}"/></linearGradient>`
+      + `<radialGradient id="glow"><stop offset="0" stop-color="${c.glow}" stop-opacity=".9"/><stop offset="1" stop-color="${c.glow}" stop-opacity="0"/></radialGradient></defs>`
+      + `<rect width="${W}" height="${H}" fill="url(#sky)"/><circle cx="${sx}" cy="${sy}" r="${sr * 2.4}" fill="url(#glow)"/>`
+      + `<g transform="translate(${sx} ${sy})" fill="${c.sun}"><circle r="${r2(sr * 0.15)}"/>`;
+    for (let i = 0; i < 12; i++) svg += `<path transform="rotate(${r2(i * 30 + RAY_JIT[i] * 57.29578)})" d="${rayPath(sr, i)}"/>`;
+    svg += '</g>';
+    c.dunes.forEach((col, i) => { svg += `<path d="${waveD(ys[i], 2.6, i * 1.9, W, H)}" fill="${col}"/>`; });
+    fallback.innerHTML = svg + '</svg>';
+  }
+
+  /* ---------- Lively Wallpaper hooks ---------- */
+  window.livelyPropertyListener = function (name, val) {
+    switch (name) {
+      case 'theme': S.theme = clampInt(val, 0, 3); break;
+      case 'motion': S.motion = Math.max(0, Number(val) || 0) / 100; break;
+      case 'fps': S.fps = FPS[clampInt(val, 0, 2)]; break;
+      case 'stars': S.stars = asBool(val); break;
+      case 'grain': S.grain = asBool(val); break;
+      default: return;
+    }
+    dirty = true;
+    if (!glOK) showFallback();
+  };
+  window.livelyWallpaperPlaybackChanged = function (data) {
+    try {
+      const o = typeof data === 'string' ? JSON.parse(data) : data;
+      paused = !!(o && (o.IsPaused === true || o.isPaused === true));
+    } catch (e) { paused = false; }
+    if (!paused) lastDraw = 0; // resume without a jump
+  };
+
+  /* ---------- start ---------- */
+  canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); glOK = false; });
+  canvas.addEventListener('webglcontextrestored', () => {
+    glOK = initGL();
+    document.documentElement.classList.toggle('no-gl', !glOK);
+    if (!glOK) showFallback();
+    dirty = true;
+  });
+  const onScheme = () => { dirty = true; if (!glOK) showFallback(); };
+  if (mqDark.addEventListener) mqDark.addEventListener('change', onScheme); else mqDark.addListener(onScheme);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) { lastDraw = 0; dirty = true; } });
+  addEventListener('resize', resize);
+
+  resize();
+  glOK = initGL();
+  if (!glOK) {
+    document.documentElement.classList.add('no-gl');
+    showFallback();
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
