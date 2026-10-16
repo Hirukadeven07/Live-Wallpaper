@@ -45,7 +45,7 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
   const SLEEP_AFTER = [0, 60, 180, 300, 600];    // seconds without mouse movement
   const VISIT_ODDS = [0, 0.1, 0.22];
   const S = { scene: 1, theme: 0, size: 0, roam: 0, cursor: 2, clicks: 2, visits: 1, taskbar: 0, sleep: 2,
-              bubbles: true, sysinfo: true, fps: 30, picture: 'claude-dunes-sunset.jpg' };
+              bubbles: true, sysinfo: true, toys: true, fps: 30, picture: 'claude-dunes-sunset.jpg' };
   let hourOverride = null, sleepOverride = null, batteryOverride = null, introOn = true;
   // For previewing in a browser, e.g. index.html#scene=2&size=1&sleep=15&battery=18
   try {
@@ -58,6 +58,7 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
     if (q.has('sleep')) sleepOverride = Math.max(0, Number(q.get('sleep')) || 0);
     if (q.has('battery')) batteryOverride = { level: clamp(Number(q.get('battery')) / 100, 0, 1), charging: asBool(q.get('charging')) };
     if (q.has('bubbles')) S.bubbles = asBool(q.get('bubbles'));
+    if (q.has('toys')) S.toys = asBool(q.get('toys'));
     if (q.has('intro')) introOn = asBool(q.get('intro'));
     if (q.has('picture')) S.picture = q.get('picture');
   } catch (e) { /* no hash */ }
@@ -184,7 +185,20 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
     [BODY, BODY, BODY, '....2200222222220022....', ARMS, ARMS, ARMS, ARMS, BODY, BODY, BODY, BODY],
     [BLANK, BODY, BODY, '....2200222222220022....', ARMS, ARMS, ARMS, ARMS, BODY, BODY, BODY, BODY]
   ], STAND.palette);
+  const LEGS = '....22..22....22..22....';
+  // Happy: eyes squeezed shut into little lines (petting, snacks, high fives).
+  const HAPPY = poseSprite([[BLANK, BLANK, BODY, BODY, '....2200222222220022....', BODY, ARMS, ARMS, ARMS, ARMS,
+                             BODY, BODY, BODY, BODY, LEGS, LEGS, LEGS, LEGS]], STAND.palette);
   const FLOURISHES = ['sway', 'turning', 'danceOnce', 'breakOnce', 'meditate', 'wave', 'lookAround', 'thinking'];
+
+  // Props, as tiny multi-colour pixel pictures. Each letter maps to a colour in pal; '.' is empty.
+  const PROPS = {
+    cookie: { rows: ['.aaa.', 'abaaa', 'aaaba', 'abaaa', '.aaa.'], pal: { a: '#C98B4E', b: '#5A3A22' } },
+    ball:   { rows: ['.ccc.', 'cciic', 'ciicc', 'ccicc', '.ccc.'], pal: { c: '#D97757', i: '#F0EEE6' } },
+    mug:    { rows: ['bbbb..', 'bbbbb.', 'bbbb.b', 'bbbbb.', 'bbbb..'], pal: { b: '#5B8DB8' } },
+    plane:  { rows: ['w......', '.www...', '..wwwww', '.sss...', 's......'], pal: { w: '#A9BED2', s: '#5F7A94' } }
+  };
+  const NOTE = ['..XX', '..X.', '..X.', 'XXX.', 'XX..'];
 
   // Little pixel glyphs for reactions. X = filled.
   const GLYPH = {
@@ -201,12 +215,17 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
   const C = { x: 0, y: 0, z: 0, vz: 0, vx: 0, vy: 0, facing: 1, state: 'boot', anim: null, f: 0, animRate: 1,
               idleT: 0, nextAct: 2, waved: false, goal: null, deskVar: 'laptop', deskT: 0, timer: 0,
               taps: 0, tray: null, zT: 0, sleptAt: 0, onLand: null, bounces: 0, peak: 0, started: false };
-  const P = { x: null, y: null, inside: false, lastMove: -1e9, anchor: null, press: null, hist: [], wakeAcc: 0 };
+  const P = { x: null, y: null, inside: false, lastMove: -1e9, lastT: 0, anchor: null, press: null, hist: [], wakeAcc: 0,
+              down: null, speed: 0, dirX: 0, turns: [], petDir: 0, rubs: [] };
   let lastActivity = now(), hoverCD = 0, hits = [], pending = null, bubble = null;
+  // cooldowns and little memories for the extra interactions
+  const CD = { boop: 0, whoosh: 0, beat: 0, spin: 0, plane: 0 };
+  let excitedUntil = 0, petLast = 0, petHeartT = 0, emptyClicks = [], lastEmpty = null, snacksEaten = [];
+  const toys = { ball: null, snack: null, plane: null };
   const parts = [];
 
   function play(name) { C.anim = MOVES[name]; C.f = C.anim.start; }
-  function setState(state, move) { C.state = state; C.timer = 0; if (move) play(move); else C.anim = null; }
+  function setState(state, move) { C.state = state; C.timer = 0; C.animRate = 1; if (move) play(move); else C.anim = null; }
   function idle() { setState('idle'); C.idleT = 0; C.vx = C.vy = 0; C.goal = null; C.animRate = 1; }
   function stepAnim(dt) {
     const a = C.anim;
@@ -218,7 +237,10 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
     } else if (a.oneShot && C.f >= a.end + 1) C.anim = null;
   }
   const headY = () => C.y - SP(C.z) - SP(C.state === 'sleep' ? 12 : 16);
-  const busy = () => ['boot', 'tap', 'held', 'fall', 'dizzy', 'sleep', 'yawn', 'wake'].includes(C.state);
+  const busy = () => ['boot', 'tap', 'held', 'fall', 'dizzy', 'sleep', 'yawn', 'wake', 'eat', 'coffee'].includes(C.state);
+  // States where he's just pottering about and happy to drop what he's doing.
+  const free = () => C.state === 'idle' || C.state === 'flourish' ||
+    (C.state === 'walk' && C.goal && ['wander', 'follow', 'chase', 'click'].includes(C.goal.kind));
   function onClawd(x, y, pad) {
     pad = pad == null ? 3 : pad;
     return Math.abs(x - C.x) <= SP(12 + pad) && y <= C.y - SP(C.z) + SP(pad) && y >= headY() - SP(pad);
@@ -379,12 +401,225 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
     say('@_@', 2.2);
   }
 
+  /* ---------- memory: he remembers when you last visited (stays in this PC's wallpaper storage) ---------- */
+  const MEM_KEY = 'clawd-desk-buddy';
+  let mem = {};
+  try { mem = JSON.parse(localStorage.getItem(MEM_KEY) || '{}') || {}; } catch (e) { mem = {}; }
+  function saveMem() { try { localStorage.setItem(MEM_KEY, JSON.stringify(mem)); } catch (e) { /* storage off */ } }
+  const today = () => new Date().toDateString();
+  function greeting() {
+    const first = !mem.lastDay, sameDay = mem.lastDay === today(), wd = new Date().getDay();
+    mem.visits = (mem.visits || 0) + 1;
+    mem.lastDay = today();
+    saveMem();
+    if (first) return "hi! i'm clawd";
+    if (sameDay) return pick(['hi again!', 'oh, hi again', 'hi!']);
+    if (wd === 5) return 'happy friday!';
+    if (wd === 1) return 'monday again...';
+    if (wd === 0 || wd === 6) return 'weekend mode!';
+    return pick(['hi!', 'good to see you!', 'hello again!']);
+  }
+  const GREET = greeting();
+
+  /* ---------- toys: snacks, the ball and paper planes ---------- */
+  const propScale = () => Math.max(2, Math.round(pix * 0.9));
+  const ballR = () => 2.5 * propScale();
+  function dropSnack(x, y) {
+    if (!S.toys) return;
+    toys.snack = { x: clamp(x, minX(), maxX()), y, vy: 0, ground: S.roam ? floorY : clamp(y + SP(10), minY(), floorY), landed: false, t: 0 };
+    emit('spark', x, y, { life: 0.4 });
+  }
+  function noticeSnack() {
+    if (C.state === 'sleep' || C.state === 'yawn') { wake(toys.snack.x); say('*sniff sniff*', 1.8); }
+    else if (!busy()) { mark('bang'); if (Math.random() < 0.5) say(pick(['a cookie?!', 'snack!', 'for me?']), 1.6); }
+  }
+  function spawnBall(x, y) {
+    if (!S.toys) return;
+    toys.ball = { x: clamp(x, ballR(), W - ballR()), y, vx: rand(-200, 200) * dpr, vy: 0, t: 0, kicks: 0, cd: 0.4 };
+    if (C.state === 'sleep' || C.state === 'yawn') wake(x);
+    else if (!busy()) { mark('bang'); say(pick(['a ball!', 'ooh!', 'ball!!']), 1.6); }
+  }
+  function throwPlane() {
+    C.facing = C.x < W / 2 ? 1 : -1;            // throw it across the open side of the screen
+    toys.plane = { x: C.x + C.facing * SP(8), y0: headY(), y: headY(), dir: C.facing, t: 0 };
+    hop(3);
+  }
+  function kick() {
+    const b = toys.ball;
+    if (!b) return;
+    face(b.x);
+    hop(4);
+    b.vx = C.facing * rand(450, 1000) * dpr;
+    b.vy = -rand(500, 1100) * dpr;
+    b.kicks++;
+    b.cd = 0.7;
+    emit('spark', b.x, b.y, { life: 0.35 });
+    idle();
+    C.nextAct = 1;
+    if (Math.random() < 0.3) say(pick(['kick!', 'hup!', 'goal?']), 1.2);
+  }
+  function updateToys(dt) {
+    const s = toys.snack;
+    if (s) {
+      s.t += dt;
+      if (!s.landed) {
+        s.vy += 2600 * dpr * dt;
+        s.y += s.vy * dt;
+        if (s.y >= s.ground) { s.y = s.ground; s.landed = true; noticeSnack(); }
+      }
+      if (s.t > 60 && C.state !== 'eat') toys.snack = null;
+    }
+    const b = toys.ball;
+    if (b) {
+      const r = ballR();
+      b.t += dt; b.cd -= dt;
+      b.vy += 2600 * dpr * dt;
+      b.x += b.vx * dt; b.y += b.vy * dt;
+      if (b.x < r) { b.x = r; b.vx = Math.abs(b.vx) * 0.7; }
+      if (b.x > W - r) { b.x = W - r; b.vx = -Math.abs(b.vx) * 0.7; }
+      if (b.y < r) { b.y = r; b.vy = Math.abs(b.vy) * 0.5; }
+      if (b.y >= floorY - r) {
+        b.y = floorY - r;
+        b.vy = b.vy > 250 * dpr ? -b.vy * 0.55 : 0;
+        b.vx *= Math.exp(-dt * 1.4);
+        if (Math.abs(b.vx) < 5 * dpr) b.vx = 0;
+      }
+      if (b.t > 45 || b.kicks >= 10) {
+        toys.ball = null;
+        if (!busy()) say(pick(['that was fun!', 'good game!']), 2.2);
+      }
+    }
+    const p = toys.plane;
+    if (p) {
+      p.t += dt;
+      p.x += p.dir * 240 * dpr * dt;
+      p.y = p.y0 + Math.sin(p.t * 2.2) * 26 * dpr + p.t * 16 * dpr;   // swoops, drifting slowly down
+      if (p.x < -40 * dpr || p.x > W + 40 * dpr || p.y > floorY) toys.plane = null;
+    }
+  }
+  // Snacks beat everything; while a ball is out he plays instead of following the cursor.
+  function toysDrive() {
+    const s = toys.snack, b = toys.ball, k = C.goal && C.goal.kind;
+    if (s && s.landed) {
+      if (C.state === 'desk') { C.deskT = 0; return true; }
+      if (free() || (C.state === 'walk' && k === 'snack')) {
+        if (k !== 'snack') goTo(s.x + (C.x < s.x ? -1 : 1) * SP(8), s.ground, RUN, 'snack');
+        return true;
+      }
+    }
+    if (!b) return false;
+    if (b.cd <= 0 && (free() || (C.state === 'walk' && k === 'ball'))) {
+      goTo(b.x + (C.x < b.x ? -1 : 1) * SP(9), floorY, 56, 'ball');   // re-aimed every frame as it rolls
+      if (Math.abs(C.x - b.x) < SP(12) && b.y > floorY - ballR() - SP(6) && Math.abs(C.y - floorY) < SP(3)) kick();
+    }
+    return true;
+  }
+  function startEat() {
+    C.goal = null; C.vx = C.vy = 0;
+    if (toys.snack) face(toys.snack.x);
+    setState('eat');
+  }
+  function finishEat() {
+    toys.snack = null;
+    hearts(2);
+    const t = now();
+    snacksEaten = snacksEaten.filter(e => t - e < 120);
+    snacksEaten.push(t);
+    if (snacksEaten.length >= 3) { snacksEaten = []; setState('yawn'); say('so full... *yawn*', 2.2); return; }
+    setState('flourish', 'danceOnce');
+    say(pick(['yum!', 'nom nom', 'tasty!', 'thank you!']), 1.8);
+  }
+
+  /* ---------- more ways to play ---------- */
+  function startPet() {
+    C.goal = null; C.vx = C.vy = 0; C.z = Math.max(0, C.z);
+    setState('pet');
+    say(pick(['hehe~', 'that tickles', 'mmm']), 1.8);
+    mem.pets = (mem.pets || 0) + 1;
+    saveMem();
+  }
+  function highFive(x, y) {
+    for (let i = 0; i < 6; i++) emit('spark', x + rand(-6, 6) * pix, y + rand(-6, 6) * pix, { life: rand(0.35, 0.7) });
+    hearts(1);
+    hop(5);
+    setState('flourish', 'danceOnce');
+    say(pick(['high five!', 'yeah!', 'nice!']), 1.6);
+  }
+  function spin(text) {
+    C.goal = null; C.vx = C.vy = 0;
+    setState('flourish', 'turning');
+    C.animRate = 2;
+    if (text && Math.random() < 0.6) say(text, 1.3);
+  }
+  function startCoffee() {
+    mem.coffeeDay = today();
+    saveMem();
+    C.goal = null; C.vx = C.vy = 0;
+    setState('coffee');
+    C.zT = 0;
+    say('coffee first.', 2.4);
+  }
+  // Drag a selection box on the desktop: is he inside it?
+  function selectionBox(x0, y0, x1, y1) {
+    if (busy() || C.state === 'pet') return;
+    const L = Math.min(x0, x1), R = Math.max(x0, x1), T = Math.min(y0, y1), B = Math.max(y0, y1);
+    const cl = C.x - SP(11), cr = C.x + SP(11), ct = headY(), cb = C.y;
+    if (cl >= L && cr <= R && ct >= T && cb <= B) {
+      C.goal = null;
+      hop(6);
+      mark('bang');
+      say(pick(["hey! don't select me", "i'm not a file!", 'nope, not a file']), 2.2);
+      goTo(C.x - L < R - C.x ? L - SP(16) : R + SP(16), C.y, RUN, 'wander');   // out through the nearest side
+    } else if (cr > L && cl < R && cb > T && ct < B) {
+      face((L + R) / 2);
+      mark('question', 0.9);
+    }
+  }
+  // A plain click on empty desktop: double-click, a steady beat, or "what was that?"
+  function emptyClick(x, y, t) {
+    if (lastEmpty && t - lastEmpty.t < 0.4 && Math.hypot(x - lastEmpty.x, y - lastEmpty.y) < 30 * dpr) {
+      lastEmpty = null;
+      if (S.toys) { spawnBall(x, y); return; }
+    } else lastEmpty = { x, y, t };
+    emptyClicks.push(t);
+    if (emptyClicks.length > 4) emptyClicks.shift();
+    const dancing = C.state === 'flourish' && C.anim === MOVES.danceOnce && t < CD.beat;
+    if (dancing) { emit('note', C.x + rand(-8, 8) * pix, headY(), { vx: rand(-6, 6) * pix, vy: -rand(12, 20) * pix, life: 1.2 }); return; }
+    if (emptyClicks.length === 4 && t > CD.beat && (free() || C.state === 'desk')) {
+      const iv = [1, 2, 3].map(i => emptyClicks[i] - emptyClicks[i - 1]);
+      const lo = Math.min(...iv), hi = Math.max(...iv);
+      if (lo > 0.22 && hi < 0.95 && hi / lo < 1.35) {
+        CD.beat = t + 3.2;
+        emptyClicks = [];
+        C.goal = null; C.vx = C.vy = 0;
+        setState('flourish', 'danceOnce');
+        C.animRate = clamp(0.55 / ((lo + hi) / 2), 0.7, 1.8);   // dances faster to a faster beat
+        for (let i = 0; i < 3; i++) emit('note', C.x + rand(-8, 8) * pix, headY(), { vx: rand(-6, 6) * pix, vy: -rand(12, 20) * pix, life: rand(1, 1.5) });
+        say(pick(['♪ nice beat', 'ooh, a beat!', '♪♪']), 1.8);
+        return;
+      }
+    }
+    if (busy() || C.state === 'desk' || C.state === 'deskOut' || C.state === 'pet') return;
+    const d = Math.hypot(x - C.x, y - (C.y - SP(8)));
+    if (d < SP(40)) {
+      face(x);
+      if (hop(6)) mark('bang');
+    } else if (S.clicks === 2 && !toys.ball) {
+      mark('question', 0.8);
+      const side = x > C.x ? -1 : 1;
+      goTo(x + side * SP(9), y + SP(4), d > W * 0.2 ? RUN : 34, 'click', { cx: x, cy: y });
+    } else face(x);
+  }
+
   /* ---------- behaviour ---------- */
   function decide() {
     C.idleT = 0;
     C.nextAct = rand(2.5, 6.5);
-    if (!C.waved) { C.waved = true; setState('flourish', 'wave'); say('hi!'); return; }
+    if (!C.waved) { C.waved = true; setState('flourish', 'wave'); say(GREET); return; }
+    const h = hourNow();
+    if (S.toys && h >= 7 && h < 10 && mem.coffeeDay !== today() && Math.random() < 0.5) { startCoffee(); return; }
     if (isNight() && Math.random() < 0.15) { say('*yawn*', 2); setState('flourish', 'meditate'); return; }
+    if (S.toys && !toys.plane && Math.random() < 0.08) { throwPlane(); return; }
     const cursorNear = S.cursor >= 2 && P.inside && now() - P.lastMove < 20;
     let r = Math.random();
     const tp = VISIT_ODDS[S.visits];
@@ -402,7 +637,9 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
       C.facing = 1; C.taps = 3; C.tray = g.tray;
       return;
     }
+    if (g.kind === 'snack' && toys.snack) { startEat(); return; }
     idle();
+    if (g.kind === 'ball' && toys.ball && Math.abs(C.x - toys.ball.x) < SP(14)) { kick(); return; }
     if (g.kind === 'click') {
       face(g.cx);
       hop(4);
@@ -418,15 +655,16 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
   function cursorDrive() {
     if (S.cursor < 2 || P.x == null || !P.inside) return;
     const st = C.state, k = C.goal && C.goal.kind;
-    const free = st === 'idle' || (st === 'walk' && (k === 'wander' || k === 'follow' || k === 'chase'));
+    const loose = st === 'idle' || (st === 'walk' && (k === 'wander' || k === 'follow' || k === 'chase'));
     const [tx, ty] = cursorSpot();
     const d = Math.hypot(tx - C.x, ty - C.y);
-    if (S.cursor === 3) {
+    const excited = now() < excitedUntil;      // you're wiggling the cursor like a laser pointer
+    if (S.cursor === 3 || excited) {
       if (st === 'desk') { C.deskT = 0; return; }
-      if (free && d > SP(6)) goTo(tx, ty, d > SP(40) ? RUN : STROLL, 'chase');
+      if ((loose || (excited && st === 'flourish')) && d > SP(6)) goTo(tx, ty, excited ? RUN * 1.5 : d > SP(40) ? RUN : STROLL, 'chase');
       return;
     }
-    if (!free || now() - P.lastMove < 0.9) return;
+    if (!loose || now() - P.lastMove < 0.9) return;
     if (P.anchor && Math.hypot(P.x - P.anchor.x, P.y - P.anchor.y) < SP(20)) return;
     P.anchor = { x: P.x, y: P.y };
     if (d > SP(20)) goTo(tx, ty, d > W * 0.25 ? RUN : STROLL, 'follow');
@@ -445,8 +683,22 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
     }
     if (pending && (C.state === 'idle' || (C.state === 'walk' && C.goal && C.goal.kind === 'wander'))) startTray(pending);
     if (pending && C.state === 'desk') C.deskT = Math.min(C.deskT, 0);
-    cursorDrive();
+    updateToys(dt);
+    if (!toysDrive()) cursorDrive();
     C.timer += dt;
+    const t = now();
+    // press and hold on empty desktop: a cookie drops from the cursor
+    const dn = P.down;
+    if (dn && dn.empty && !dn.moved && !dn.used && S.clicks && S.toys && t - dn.t > 0.55) { dn.used = true; dropSnack(dn.x, dn.y); }
+    // hold the cursor still on top of him: boop
+    if (C.state === 'idle' && P.inside && P.x != null && !P.down && t > CD.boop && t - P.lastMove > 1.4 && onClawd(P.x, P.y, 1)) {
+      CD.boop = t + 8;
+      face(P.x);
+      hop(6);
+      const bx = P.x, by = P.y;
+      for (let i = 0; i < 3; i++) emit('spark', bx + rand(-3, 3) * pix, by + rand(-3, 3) * pix, { life: rand(0.35, 0.6) });
+      say('boop!', 1.4);
+    }
 
     switch (C.state) {
       case 'boot': {
@@ -456,7 +708,7 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
         C.x = Math.min(to, C.x + SP(26) * dt);
         C.animRate = 0.68 * 26 / 9.67;
         stepAnim(dt);
-        if (C.x >= to) { C.waved = true; C.animRate = 1; setState('flourish', 'wave'); say('hi!'); }
+        if (C.x >= to) { C.waved = true; setState('flourish', 'wave'); say(GREET); }
         break;
       }
       case 'idle': {
@@ -549,30 +801,104 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
         stepAnim(dt);
         if (!C.anim || C.timer > 3.2) { idle(); C.nextAct = 1.5; }
         break;
+      case 'pet':
+        petHeartT += dt;
+        if (petHeartT > 0.55) { petHeartT = 0; hearts(1); }
+        if (t - petLast > 1) {
+          idle();
+          C.nextAct = 2;
+          if (Math.random() < 0.4) say(pick(['more?', 'that was nice', ':)']), 1.6);
+        }
+        break;
+      case 'eat':
+        C.zT += dt;
+        if (C.zT > 0.45) {
+          C.zT = 0;
+          hop(2);
+          for (let i = 0; i < 2; i++) emit('dust', C.x + C.facing * SP(10), C.y - SP(4), { vx: rand(-1, 1) * SP(14), vy: -rand(6, 14) * pix, life: 0.45, color: '#B07A45' });
+        }
+        if (C.timer > 2.2) finishEat();
+        break;
+      case 'coffee':
+        C.zT += dt;
+        if (C.zT > 0.4) { C.zT = 0; emit('steam', C.x + C.facing * SP(13) + rand(-1, 1) * pix, C.y - SP(9), { vx: rand(-2, 2) * pix, vy: -SP(8), life: 1.1 }); }
+        if (C.timer > 7) { idle(); C.nextAct = 2; say(pick(['ahh.', 'ok, ready!']), 1.6); }
+        break;
     }
   }
 
   /* ---------- input (Lively passes the mouse through when Wallpaper input is set to Mouse) ---------- */
+  // Distance from point (px, py) to the segment a-b.
+  function segDist(px, py, ax, ay, bx, by) {
+    const dx = bx - ax, dy = by - ay, L = dx * dx + dy * dy;
+    const u = L ? clamp(((px - ax) * dx + (py - ay) * dy) / L, 0, 1) : 0;
+    return Math.hypot(px - (ax + u * dx), py - (ay + u * dy));
+  }
   function onMove(e) {
-    const x = e.clientX * dpr, y = e.clientY * dpr;
-    const moved = P.x == null ? 0 : Math.hypot(x - P.x, y - P.y);
+    const x = e.clientX * dpr, y = e.clientY * dpr, t = now();
+    const px = P.x, py = P.y;
+    const moved = px == null ? 0 : Math.hypot(x - px, y - py);
+    const dtm = Math.max(0.004, t - P.lastT);
+    P.lastT = t;
     P.x = x; P.y = y; P.inside = true;
-    if (moved > 0.5) { P.lastMove = now(); lastActivity = now(); }
+    if (moved > 0.5) { P.lastMove = t; lastActivity = t; }
+    if (!(e.buttons & 1)) P.down = null;
     if (C.state === 'sleep' || C.state === 'yawn') {
       P.wakeAcc += moved;
       if (P.wakeAcc > 60 * dpr) wake(x);
       return;
     }
     if (C.state === 'held') {
-      P.hist.push({ x, y, t: now() });
-      while (P.hist.length > 2 && now() - P.hist[0].t > 0.1) P.hist.shift();
+      P.hist.push({ x, y, t });
+      while (P.hist.length > 2 && t - P.hist[0].t > 0.1) P.hist.shift();
       if (!(e.buttons & 1)) release();
       return;
     }
     if (P.press && (e.buttons & 1) && S.clicks && !busy() && Math.hypot(x - P.press.x, y - P.press.y) > SP(4)) { grab(); return; }
-    if (S.cursor >= 1 && !P.press && now() > hoverCD && onClawd(x, y, 1) &&
+    if (P.down && P.down.empty && (e.buttons & 1) && Math.hypot(x - P.down.x, y - P.down.y) > 8 * dpr) P.down.moved = true;
+    if (px == null || (e.buttons & 1)) return;
+
+    // how the cursor is moving: speed, and how often it doubles back
+    const v = moved / dtm;
+    P.speed = P.speed * 0.7 + v * 0.3;
+    const dir = Math.sign(x - px);
+    if (dir && Math.abs(x - px) > 2 * dpr) {
+      if (P.dirX && dir !== P.dirX) P.turns.push(t);
+      P.dirX = dir;
+    }
+    P.turns = P.turns.filter(k => t - k < 1);
+    const over = onClawd(x, y, 2);
+
+    // rubbing back and forth over him: petting
+    if (over && dir && (free() || C.state === 'pet')) {
+      if (P.petDir && dir !== P.petDir) P.rubs.push(t);
+      P.petDir = dir;
+      P.rubs = P.rubs.filter(k => t - k < 1.4);
+      if (P.rubs.length >= 3) {
+        if (C.state !== 'pet') startPet();
+        petLast = t;
+        return;
+      }
+    } else if (!over) { P.petDir = 0; P.rubs = []; }
+
+    // flinging the cursor right through him: he spins
+    if (v > 2600 * dpr && t > CD.whoosh && free() && segDist(C.x, C.y - SP(8), px, py, x, y) < SP(14)) {
+      CD.whoosh = t + 3;
+      spin(pick(['whoa!', 'whoosh!']));
+      for (let i = 0; i < 4; i++) emit('wind', C.x - Math.sign(x - px) * SP(14), C.y - SP(rand(4, 14)), { vx: Math.sign(x - px) * rand(40, 70) * pix, life: rand(0.3, 0.5) });
+      return;
+    }
+
+    // wiggling it fast nearby, like a laser pointer: he gets excited and chases
+    if (S.cursor >= 2 && !toys.ball && P.speed > 1100 * dpr && P.turns.length >= 3 &&
+        Math.hypot(x - C.x, y - C.y) < 0.4 * Math.max(W, H) && (free() || C.state === 'walk')) {
+      if (t >= excitedUntil) { mark('bang'); if (Math.random() < 0.6) say(pick(['!!', 'ooh!', 'gotta catch it']), 1.4); }
+      excitedUntil = t + 1.3;
+    }
+
+    if (S.cursor >= 1 && t > hoverCD && over &&
         (C.state === 'idle' || (C.state === 'walk' && C.goal && C.goal.kind === 'wander'))) {
-      hoverCD = now() + 8;
+      hoverCD = t + 8;
       C.goal = null;
       face(x);
       setState('flourish', 'wave');
@@ -581,17 +907,28 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
   }
   function onDown(e) {
     if (e.button !== 0) return;
-    const x = e.clientX * dpr, y = e.clientY * dpr;
-    P.x = x; P.y = y; P.inside = true; P.lastMove = now(); lastActivity = now();
+    const x = e.clientX * dpr, y = e.clientY * dpr, t = now();
+    P.x = x; P.y = y; P.inside = true; P.lastMove = t; lastActivity = t;
+    P.down = { x, y, t, empty: true, moved: false, used: false };
     if (!S.clicks) return;
-    if (C.state === 'sleep' || C.state === 'yawn') { wake(x); return; }
-    const t = now();
+    if (C.state === 'sleep' || C.state === 'yawn') { wake(x); P.down.used = true; return; }
+    const b = toys.ball;
+    if (b && Math.hypot(x - b.x, y - b.y) < ballR() + 10 * dpr) {
+      // bat the ball away from the cursor
+      b.vx = (b.x >= x ? 1 : -1) * rand(600, 1000) * dpr;
+      b.vy = -rand(700, 1100) * dpr;
+      emit('spark', x, y, { life: 0.35 });
+      P.down.used = true;
+      return;
+    }
     if (onClawd(x, y)) {
+      P.down.empty = false;
       P.press = { x, y };
       hits = hits.filter(h => t - h < 2.5);
       hits.push(t);
-      if (busy()) return;
+      if (busy()) { if (C.state === 'eat') say(pick(['mine!', 'nom']), 1.2); return; }
       if (C.state === 'desk') { hearts(2); say(pick(['one sec!', 'brb, coding', 'busy!']), 1.8); return; }
+      if (C.state === 'flourish' && C.anim === MOVES.wave) { C.goal = null; face(x); highFive(x, y); return; }
       C.goal = null; C.vx = C.vy = 0;
       face(x);
       if (hits.length >= 5) { hits = []; dizzy(); return; }
@@ -603,24 +940,24 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
       return;
     }
     emit('ripple', x, y, { r0: 2 * dpr, r1: 16 * dpr, life: 0.45 });
-    if (busy() || C.state === 'desk' || C.state === 'deskOut') return;
-    const d = Math.hypot(x - C.x, y - (C.y - SP(8)));
-    if (d < SP(40)) {
-      face(x);
-      if (hop(6)) mark('bang');
-    } else if (S.clicks === 2) {
-      mark('question', 0.8);
-      const side = x > C.x ? -1 : 1;
-      goTo(x + side * SP(9), y + SP(4), d > W * 0.2 ? RUN : 34, 'click', { cx: x, cy: y });
-    } else face(x);
   }
-  function onUp() {
+  function onUp(e) {
+    const dn = P.down;
+    P.down = null;
     P.press = null;
-    if (C.state === 'held') release();
+    if (C.state === 'held') { release(); return; }
+    if (!dn || !dn.empty || dn.used || !S.clicks) return;
+    if (dn.moved) { selectionBox(dn.x, dn.y, e.clientX * dpr, e.clientY * dpr); return; }
+    emptyClick(dn.x, dn.y, now());
+  }
+  function onWheel(e) {
+    const t = now();
+    if (t > CD.spin && !busy() && onClawd(e.clientX * dpr, e.clientY * dpr, 2)) { CD.spin = t + 1.5; spin('wheee'); }
   }
   addEventListener('pointermove', onMove, { passive: true });
   addEventListener('pointerdown', onDown, { passive: true });
   addEventListener('pointerup', onUp, { passive: true });
+  addEventListener('wheel', onWheel, { passive: true });
   document.addEventListener('mouseout', e => { if (!e.relatedTarget) P.inside = false; });
 
   /* ---------- backgrounds ---------- */
@@ -788,9 +1125,43 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
     const ox = Math.round(x - (w * s) / 2), oy = Math.round(y - h * s);
     for (let r = 0; r < h; r++) for (let c = 0; c < w; c++) if (rows[r][c] === 'X') ctx.fillRect(ox + c * s, oy + r * s, s, s);
   }
+  // Multi-colour prop, anchored at its bottom centre; flip mirrors it left-right.
+  function drawProp(pr, x, y, s, flip) {
+    const rows = pr.rows, w = rows[0].length, h = rows.length;
+    const ox = Math.round(x - (w * s) / 2), oy = Math.round(y - h * s);
+    for (let r = 0; r < h; r++) for (let c = 0; c < w; c++) {
+      const ch = rows[r][flip ? w - 1 - c : c];
+      if (ch === '.') continue;
+      ctx.fillStyle = pr.pal[ch];
+      ctx.fillRect(ox + c * s, oy + r * s, s, s);
+    }
+  }
+  function drawToys() {
+    const s = propScale(), sd = sceneDark();
+    const k = toys.snack;
+    if (k) {
+      ctx.globalAlpha = k.t > 57 ? Math.max(0, (60 - k.t) / 3) : C.state === 'eat' ? 1 - 0.7 * clamp(C.timer / 2.2, 0, 1) : 1;
+      drawProp(PROPS.cookie, k.x, k.y, s);
+      ctx.globalAlpha = 1;
+    }
+    const b = toys.ball;
+    if (b) {
+      const lift = floorY - (b.y + ballR());
+      ctx.fillStyle = `rgba(20,14,10,${((0.16 + 0.12 * sd) / (1 + lift / (40 * dpr))).toFixed(3)})`;
+      ctx.beginPath();
+      ctx.ellipse(b.x, floorY, s * 2.5, Math.max(1, s * 0.6), 0, 0, TAU);
+      ctx.fill();
+      ctx.globalAlpha = b.t > 43 ? Math.max(0, (45 - b.t) / 2) : 1;
+      drawProp(PROPS.ball, b.x, b.y + ballR(), s, Math.floor(b.x / (s * 4)) % 2 === 1);   // pattern flips as it rolls
+      ctx.globalAlpha = 1;
+    }
+    const p = toys.plane;
+    if (p) drawProp(PROPS.plane, p.x, p.y, s, p.dir < 0);
+  }
   function currentFrame() {
     if (C.state === 'sleep') return [SLEEP, Math.floor(now() / 1.4) % 2];
     if (C.state === 'yawn') return [SLEEP, 0];
+    if (C.state === 'pet' || C.state === 'eat') return [HAPPY, 0];
     if (C.anim) return [C.anim.spr, clamp(C.f | 0, 0, C.anim.spr.frames.length - 1)];
     return [STAND, 0];
   }
@@ -812,6 +1183,7 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
     if (C.facing < 0) ctx.scale(-1, 1);
     ctx.drawImage(frameCanvas(sp, fi), -sp.ax * pix, -sp.ay * pix, sp.w * pix, sp.h * pix);
     ctx.restore();
+    if (C.state === 'coffee') drawProp(PROPS.mug, x + C.facing * SP(13), y - SP(4), propScale(), C.facing < 0);
     if (C.state === 'dizzy') {
       const gs = Math.max(1, Math.round(pix * 0.6));
       for (let i = 0; i < 3; i++) {
@@ -836,7 +1208,10 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
         case 'bang': glyph(GLYPH.bang, x, y, gs, '#D97757'); break;
         case 'question': glyph(GLYPH.question, x, y, gs, sd > 0.5 ? '#F0EEE6' : '#3D3929'); break;
         case 'spark': glyph(GLYPH.spark, x, y, gs, '#E8B04A'); break;
-        case 'dust': p.vy += SP(40) * dt; ctx.fillStyle = sd > 0.5 ? '#6B645A' : '#B9AE9C'; ctx.fillRect(Math.round(x), Math.round(y), Math.max(1, Math.round(pix * 0.8)), Math.max(1, Math.round(pix * 0.8))); break;
+        case 'note': glyph(NOTE, x + Math.sin(p.t * 5) * SP(1.5), y, gs, sd > 0.5 ? '#F0EEE6' : '#D97757'); break;
+        case 'steam': ctx.fillStyle = sd > 0.5 ? 'rgba(240,238,230,0.55)' : 'rgba(120,112,100,0.45)'; ctx.fillRect(Math.round(x + Math.sin(p.t * 6) * pix), Math.round(y), gs, gs); break;
+        case 'wind': ctx.fillStyle = sd > 0.5 ? 'rgba(240,238,230,0.6)' : 'rgba(61,57,41,0.45)'; ctx.fillRect(Math.round(x), Math.round(y), SP(6), Math.max(1, Math.round(pix * 0.5))); break;
+        case 'dust': p.vy += SP(40) * dt; ctx.fillStyle = p.color || (sd > 0.5 ? '#6B645A' : '#B9AE9C'); ctx.fillRect(Math.round(x), Math.round(y), Math.max(1, Math.round(pix * 0.8)), Math.max(1, Math.round(pix * 0.8))); break;
         case 'z': {
           ctx.fillStyle = sd > 0.5 ? '#F0EEE6' : '#3D3929';
           ctx.font = `700 ${Math.round((9 + u * 6) * dpr)}px "Cascadia Mono", Consolas, monospace`;
@@ -916,6 +1291,7 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
     checkClock();
     updateClawd(dt);
     ctx.clearRect(0, 0, W, H);
+    drawToys();
     drawClawd();
     drawParts(dt);
     drawBubble(dt);
@@ -935,6 +1311,7 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
       case 'sleep': S.sleep = clampInt(val, 0, 4); break;
       case 'bubbles': S.bubbles = asBool(val); if (!S.bubbles) bubble = null; break;
       case 'sysinfo': S.sysinfo = asBool(val); break;
+      case 'toys': S.toys = asBool(val); if (!S.toys) { toys.ball = null; toys.snack = null; toys.plane = null; } break;
       case 'fps': S.fps = FPS[clampInt(val, 0, 2)]; break;
       case 'picture': S.picture = val; loadPicture(val); break;
       default: return;
@@ -969,7 +1346,10 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
   if (!introOn) { C.x = W * 0.16; C.waved = true; idle(); }
   if (S.picture) loadPicture(S.picture);
   if (/(^|&)debug=1/.test(location.hash.slice(1))) window.clawdDebug = { C, P, S, parts, get bubble() { return bubble; }, onBattery, say, setState, hearts, fallAsleep, startDesk, get floorY() { return floorY; },
-    draw() { drawBg(); ctx.clearRect(0, 0, W, H); drawClawd(); drawParts(0); drawBubble(0); } };
+    draw() { drawBg(); ctx.clearRect(0, 0, W, H); drawToys(); drawClawd(); drawParts(0); drawBubble(0); },
+    toys, dropSnack, spawnBall, throwPlane, startCoffee, mem, get excitedUntil() { return excitedUntil; } };
+  // Debug only: keep ticking in a hidden preview tab, where requestAnimationFrame is throttled.
+  if (window.clawdDebug) setInterval(() => frame(performance.now()), 33);
   requestAnimationFrame(frame);
 })();
 </script>

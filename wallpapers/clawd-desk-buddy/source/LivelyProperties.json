@@ -65,6 +65,11 @@
     "value": true,
     "text": "Reacts to the hour and to your battery"
   },
+  "toys": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Toys: snacks, ball, paper planes and coffee"
+  },
   "bubbles": {
     "type": "checkbox",
     "value": true,
