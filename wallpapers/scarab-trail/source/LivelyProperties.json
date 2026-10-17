@@ -1,0 +1,39 @@
+{
+  "tod": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Time of day",
+    "items": ["Follow the story (morning to night)", "Always daytime", "Always golden hour", "Always night"]
+  },
+  "speed": {
+    "type": "slider",
+    "value": 100,
+    "min": 50,
+    "max": 200,
+    "step": 10,
+    "text": "Story speed (%)"
+  },
+  "camera": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Camera",
+    "items": ["Close", "Medium", "Far"]
+  },
+  "fps": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Frame rate",
+    "items": ["15 fps (battery saver)", "30 fps", "60 fps"]
+  },
+  "quality": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Render quality",
+    "items": ["Battery saver", "Balanced", "High (full resolution)"]
+  },
+  "shadows": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Shadows"
+  }
+}
