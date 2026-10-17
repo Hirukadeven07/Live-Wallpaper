@@ -1,0 +1,116 @@
+{
+  "slots": {
+    "type": "slider",
+    "value": 12,
+    "text": "How many slots",
+    "min": 1,
+    "max": 100,
+    "step": 1
+  },
+  "perShelf": {
+    "type": "slider",
+    "value": 6,
+    "text": "Slots in each row",
+    "min": 1,
+    "max": 20,
+    "step": 1
+  },
+  "layout": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Where the shelf goes",
+    "items": ["Wherever there's space", "Bottom right", "Bottom left", "Top right", "Top left"]
+  },
+  "relocate": {
+    "type": "button",
+    "value": "Find a new spot",
+    "text": "Move the shelf"
+  },
+  "hints": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Show \"drop any app here\" hints"
+  },
+  "screen": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Which screen this wallpaper is on",
+    "items": ["Automatic (Clawd's Eyes finds it)", "Main screen", "Screen 2", "Screen 3"]
+  },
+  "scene": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Background",
+    "items": ["Paper", "Graph paper", "Midnight terminal", "Dunes", "Clay glow", "Your own picture"]
+  },
+  "picture": {
+    "type": "folderDropdown",
+    "value": "claude-dunes-sunset.jpg",
+    "text": "Your own picture (pick Background: Your own picture)",
+    "filter": "*.jpg|*.jpeg|*.png|*.webp|*.bmp",
+    "folder": "pictures"
+  },
+  "theme": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Appearance",
+    "items": ["Match Windows", "Light", "Dark", "Follow the clock (day 7:30 to 18:00)"]
+  },
+  "size": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Clawd size",
+    "items": ["Tiny", "Small", "Medium"]
+  },
+  "cursor": {
+    "type": "dropdown",
+    "value": 2,
+    "text": "Your cursor",
+    "items": ["Ignore it", "Look at it", "Follow it when it stops", "Chase it everywhere"]
+  },
+  "clicks": {
+    "type": "dropdown",
+    "value": 2,
+    "text": "Your clicks",
+    "items": ["Ignore them", "React to them", "React and run to them"]
+  },
+  "visits": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Taskbar visits (clock and battery)",
+    "items": ["Never", "Sometimes", "Often"]
+  },
+  "taskbar": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Taskbar height",
+    "items": ["Auto", "Hidden (auto-hide)", "Small (40 px)", "Standard (48 px)", "Large (56 px)", "Extra large (64 px)"]
+  },
+  "sleep": {
+    "type": "dropdown",
+    "value": 2,
+    "text": "Naps when the mouse is idle",
+    "items": ["Never", "After 1 minute", "After 3 minutes", "After 5 minutes", "After 10 minutes"]
+  },
+  "sysinfo": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Reacts to the hour and to your battery"
+  },
+  "toys": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Toys: snacks, ball, paper planes and coffee"
+  },
+  "bubbles": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Speech bubbles"
+  },
+  "fps": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Frame rate",
+    "items": ["15 fps (battery saver)", "30 fps", "60 fps"]
+  }
+}

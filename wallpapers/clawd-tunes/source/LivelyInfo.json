@@ -1,0 +1,14 @@
+{
+  "AppVersion": "1.0.0.0",
+  "Title": "Clawd Tunes",
+  "Thumbnail": "thumbnail.png",
+  "Preview": null,
+  "Desc": "A music player for Spotify on your desktop, with Clawd dancing on top. Five player styles, and he reacts to every song, skip and pause. Run Clawd's Ears so he can hear Spotify.",
+  "Author": "Claude",
+  "License": "Personal use",
+  "Contact": "",
+  "Type": 1,
+  "FileName": "index.html",
+  "Arguments": "--pause-event true --audio true",
+  "IsAbsolutePath": false
+}

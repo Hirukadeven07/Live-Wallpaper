@@ -1,0 +1,137 @@
+{
+  "style": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Player style",
+    "items": ["Classic card", "Wide", "Slim bar", "Bubbles", "Turntable"]
+  },
+  "place": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Where the player sits",
+    "items": ["Bottom left", "Bottom right", "Bottom middle", "Top left", "Top right", "Middle of the screen", "Your own spot (use the two sliders below)"]
+  },
+  "spotX": {
+    "type": "slider",
+    "value": 0,
+    "text": "Your own spot: across (0 = left, 100 = right)",
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  "spotY": {
+    "type": "slider",
+    "value": 100,
+    "text": "Your own spot: down (0 = top, 100 = bottom)",
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  "margin": {
+    "type": "slider",
+    "value": 40,
+    "text": "Space between the player and the screen edges (px)",
+    "min": 0,
+    "max": 200,
+    "step": 4
+  },
+  "resetPlace": {
+    "type": "button",
+    "value": "Put it back",
+    "text": "Dragged the player somewhere?"
+  },
+  "psize": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Player size",
+    "items": ["Small", "Medium", "Large"]
+  },
+  "skin": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Player colours",
+    "items": ["Match the album cover", "Charcoal", "Clay", "Frosted glass", "Paper"]
+  },
+  "viz": {
+    "type": "dropdown",
+    "value": 3,
+    "text": "Music visualiser",
+    "items": ["Off", "Bars along the bottom", "Glow around the player", "Bars and glow"]
+  },
+  "timeLeft": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Time on the right",
+    "items": ["Time left", "Song length"]
+  },
+  "scene": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Background",
+    "items": ["Album glow", "Stage lights", "Paper", "Dunes", "Clay glow", "Your own picture"]
+  },
+  "picture": {
+    "type": "folderDropdown",
+    "value": "claude-dunes-sunset.jpg",
+    "text": "Your own picture (pick Background: Your own picture)",
+    "filter": "*.jpg|*.jpeg|*.png|*.webp|*.bmp",
+    "folder": "pictures"
+  },
+  "theme": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Appearance",
+    "items": ["Match Windows", "Light", "Dark", "Follow the clock (day 7:30 to 18:00)"]
+  },
+  "size": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Clawd size",
+    "items": ["Tiny", "Small", "Medium"]
+  },
+  "energy": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "How much Clawd dances",
+    "items": ["Chill", "Normal", "Party"]
+  },
+  "cursor": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Your cursor",
+    "items": ["Ignore it", "Look at it"]
+  },
+  "sleep": {
+    "type": "dropdown",
+    "value": 2,
+    "text": "Naps when there's no music and no mouse",
+    "items": ["Never", "After 1 minute", "After 3 minutes", "After 5 minutes", "After 10 minutes"]
+  },
+  "songNames": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Clawd reads out each new song"
+  },
+  "bubbles": {
+    "type": "checkbox",
+    "value": true,
+    "text": "Speech bubbles"
+  },
+  "demo": {
+    "type": "checkbox",
+    "value": false,
+    "text": "Play made-up demo songs until Spotify is linked"
+  },
+  "taskbar": {
+    "type": "dropdown",
+    "value": 0,
+    "text": "Taskbar height",
+    "items": ["Auto", "Hidden (auto-hide)", "Small (40 px)", "Standard (48 px)", "Large (56 px)", "Extra large (64 px)"]
+  },
+  "fps": {
+    "type": "dropdown",
+    "value": 1,
+    "text": "Frame rate",
+    "items": ["15 fps (battery saver)", "30 fps", "60 fps"]
+  }
+}
