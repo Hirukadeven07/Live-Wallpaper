@@ -182,20 +182,43 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
     }
     return c;
   }
-  // Where the top of his head is in a frame, so the headphones sit on it whatever the pose.
+  // Where his head is in a frame, so the headphones fit it whatever the pose. It's found from his eyes (the darkest
+  // colour): the head is the solid run of pixels across the eye row, and its top edge is followed column by column,
+  // so the band hugs the head even when he leans or turns.
   function headOf(sp, i) {
     let hd = sp.heads[i];
-    if (hd === undefined) {
-      hd = null;
-      const f = sp.frames[i];
-      for (let y = 0; y < sp.h && !hd; y++) {
-        let a = -1, b = -1, n = 0;
-        for (let x = 0; x < sp.w; x++) if (f[y * sp.w + x] !== 255) { if (a < 0) a = x; b = x; n++; }
-        if (n >= 6) hd = { y, a, b };
-      }
-      sp.heads[i] = hd;
+    if (hd !== undefined) return hd;
+    hd = null;
+    const f = sp.frames[i], w = sp.w, h = sp.h, solid = (x, y) => x >= 0 && x < w && y >= 0 && y < h && f[y * w + x] !== 255;
+    let dark = 0;
+    sp.palette.forEach((c, k) => { if (lum(hexRGB(c)) < lum(hexRGB(sp.palette[dark]))) dark = k; });
+    // The first dark pixel inside a wide solid run is an eye (dark specks in a thought bubble or a narrow arm don't count).
+    const run = (x, y) => { let a = x, b = x; while (solid(a - 1, y)) a--; while (solid(b + 1, y)) b++; return b - a + 1; };
+    let ey = -1, ex = -1;
+    for (let y = 0; y < h && ey < 0; y++) for (let x = 0; x < w; x++) if (f[y * w + x] === dark && run(x, y) >= 10) { ey = y; ex = x; break; }
+    if (ey < 0) {
+      // facing away, no eyes: use the first wide row instead
+      for (let y = 0; y < h && ey < 0; y++) { let n = 0, fx = -1; for (let x = 0; x < w; x++) if (solid(x, y)) { n++; if (fx < 0) fx = x; } if (n >= 6) { ey = y + 2; ex = fx + 3; } }
+      if (ey < 0 || !solid(ex, ey)) { sp.heads[i] = null; return null; }
     }
+    let a = ex, b = ex;
+    while (solid(a - 1, ey)) a--;
+    while (solid(b + 1, ey)) b++;
+    if (b - a < 5) { sp.heads[i] = null; return null; }
+    const top = [];
+    for (let x = a; x <= b; x++) { let y = ey; while (solid(x, y - 1)) y--; top[x] = y; }
+    hd = { a, b, ey, top };
+    sp.heads[i] = hd;
     return hd;
+  }
+  // Headphones drawn in sprite pixels on top of the frame; px(x, y, w, h, colour) fills in that grid.
+  function drawPhones(hd, px, cup) {
+    const band = '#2B2D31', { a, b, ey, top } = hd;
+    for (let x = a; x <= b; x++) px(x, top[x] - 1, 1, 1, band);         // the band, lying right on his head
+    for (let y = top[a]; y <= ey - 2; y++) px(a - 1, y, 1, 1, band);    // down the sides to the ear cups
+    for (let y = top[b]; y <= ey - 2; y++) px(b + 1, y, 1, 1, band);
+    px(a - 2, ey - 1, 2, 3, band); px(b + 1, ey - 1, 2, 3, band);      // ear cups beside his eyes
+    px(a - 2, ey, 1, 1, cup); px(b + 2, ey, 1, 1, cup);
   }
   const SPR = {};
   for (const name of Object.keys(CLAWD_SPRITES)) SPR[name] = decodeSprite(name);
@@ -2173,15 +2196,9 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
     if (linked() && sp.name !== 'BreakDancing') {
       const hd = headOf(sp, fi);
       if (hd) {
-        const ox = -sp.ax, oy = -sp.ay, p = pal();
-        const px = (cx, cy, w, h, col) => { ctx.fillStyle = col; ctx.fillRect((ox + cx) * pix, (oy + cy) * pix, w * pix, h * pix); };
-        const band = '#2B2D31', cup = css(S.skin === 1 ? [30, 215, 96] : p.accent2);
-        const top = hd.y - (sp.name === 'Sleep' ? 1 : 2);
-        px(hd.a + 1, top, hd.b - hd.a - 1, 1, band);
-        px(hd.a - 1, top + 1, 1, 1, band); px(hd.a, top, 1, 1, band);
-        px(hd.b + 1, top + 1, 1, 1, band); px(hd.b, top, 1, 1, band);
-        px(hd.a - 2, top + 2, 2, 3, band); px(hd.b + 1, top + 2, 2, 3, band);
-        px(hd.a - 2, top + 3, 1, 1, cup); px(hd.b + 2, top + 3, 1, 1, cup);
+        const ox = -sp.ax, oy = -sp.ay;
+        drawPhones(hd, (cx, cy, w, h, col) => { ctx.fillStyle = col; ctx.fillRect((ox + cx) * pix, (oy + cy) * pix, w * pix, h * pix); },
+                   css(S.skin === 1 ? [30, 215, 96] : pal().accent2));
       }
     }
     ctx.restore();
@@ -2383,7 +2400,7 @@ const CLAWD_SPRITES = {"Walking":{"w":24,"h":18,"palette":["#141413","#be684d","
   if (!introOn) { C.state = 'idle'; C.waved = true; C.dropped = true; idle(); }
   if (S.picture) loadPicture(S.picture);
   if (/(^|&)debug=1/.test(location.hash.slice(1))) {
-    window.tunesDebug = { C, M, S, A, ART, mem, get PL() { return PL; }, get bubble() { return bubble; }, ingest, say, setState, runAct, seekTo, setVolume,
+    window.tunesDebug = { C, M, S, A, ART, mem, SPR, MOVES, SLEEP, HAPPY, headOf, drawPhones, frameCanvas, get PL() { return PL; }, get bubble() { return bubble; }, ingest, say, setState, runAct, seekTo, setVolume,
                           pressButton, fallAsleep, tick, onBeat, onDrop, livelyPropertyListener: window.livelyPropertyListener };
     // Debug only: keep ticking in a hidden preview tab, where requestAnimationFrame is throttled.
     setInterval(() => frame(performance.now()), 33);
