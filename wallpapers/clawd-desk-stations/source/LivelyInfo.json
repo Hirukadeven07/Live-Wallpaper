@@ -1,0 +1,14 @@
+{
+  "AppVersion": "1.0.0.0",
+  "Title": "Clawd Desk Stations",
+  "Thumbnail": "thumbnail.png",
+  "Preview": null,
+  "Desc": "A shelf of slots on your desktop icon grid, as many as you like. Drop any app's icon in and Clawd works out what it is and climbs over to play with it. Run Clawd's Eyes so he can see which app is where.",
+  "Author": "Claude",
+  "License": "Personal use",
+  "Contact": "",
+  "Type": 1,
+  "FileName": "index.html",
+  "Arguments": "--pause-event true",
+  "IsAbsolutePath": false
+}
