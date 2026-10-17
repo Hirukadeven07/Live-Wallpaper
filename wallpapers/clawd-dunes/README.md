@@ -11,6 +11,12 @@ Clawd, the Claude Code mascot, living on the dunes. He walks in from the left, w
 
 New to this? Follow the [step-by-step instructions](../../README.md#how-to-use-a-live-wallpaper) on the main page.
 
+## Set it up
+
+1. **Add the wallpaper to Lively** and click its tile.
+2. Optional: **let Clawd see your cursor.** In Lively, open **Settings**, go to **Wallpaper**, and set **Wallpaper input** to **Mouse**. Then he turns toward your cursor when he's standing still.
+3. Optional: right-click the tile and choose **Customise** for Clawd's size, the look and the dune speed.
+
 ## Settings
 
 Right-click the wallpaper in Lively and choose **Customise**.

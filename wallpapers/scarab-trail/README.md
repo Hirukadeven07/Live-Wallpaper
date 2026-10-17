@@ -11,6 +11,11 @@ A low-poly off-road trip that plays out on your desktop from morning to night. T
 
 New to this? Follow the [step-by-step instructions](../../README.md#how-to-use-a-live-wallpaper) on the main page.
 
+## Set it up
+
+1. **Add the wallpaper to Lively** and click its tile. That's it; there's nothing else to set up. One trip takes about four and a half minutes, then it starts again.
+2. Optional: right-click the tile, choose **Customise**, and pick the time of day (follow the story, or always day, golden hour or night), the story speed, the camera distance, the render quality and shadows.
+
 ## The story
 
 One trip takes about four and a half minutes, then it starts again. Times are at the normal story speed.

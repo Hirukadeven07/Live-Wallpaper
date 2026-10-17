@@ -11,8 +11,12 @@ A tiny Clawd who lives on your desktop. He wanders around the whole screen, foll
 
 New to this? Follow the [step-by-step instructions](../../README.md#how-to-use-a-live-wallpaper) on the main page.
 
-> [!IMPORTANT]
-> For Clawd to see your cursor and clicks, Lively has to pass the mouse to the wallpaper. Open Lively's **Settings**, go to **Wallpaper**, and set **Wallpaper input** to **Mouse**.
+## Set it up
+
+1. **Add the wallpaper to Lively** and click its tile.
+2. **Let Clawd see your mouse (needed).** In Lively, open **Settings**, go to **Wallpaper**, and set **Wallpaper input** to **Mouse**. Without this he can't follow your cursor or react to clicks.
+3. **Press Win + D and try it.** Rest your cursor somewhere, click him, rub the cursor over him, or double-click empty desktop for a ball. The full list is in [Things to try](#things-to-try).
+4. Optional: right-click the tile and choose **Customise** for the background (or your own picture), Clawd's size, naps and toys.
 
 ## Things to try
 

@@ -11,6 +11,11 @@ A clay-orange spark rising over five layers of slowly drifting dunes. The sky fo
 
 New to this? Follow the [step-by-step instructions](../../README.md#how-to-use-a-live-wallpaper) on the main page.
 
+## Set it up
+
+1. **Add the wallpaper to Lively** and click its tile. That's it; there's nothing else to set up.
+2. Optional: right-click the tile, choose **Customise**, and pick the look (match Windows, light, dark or follow the clock), how fast the dunes drift, and stars or paper grain.
+
 ## Settings
 
 Right-click the wallpaper in Lively and choose **Customise**.
