@@ -43,6 +43,7 @@ Most also come with still images, so you can use them without installing anythin
 | <a href="wallpapers/clawd-desk-buddy"><img src="wallpapers/clawd-desk-buddy/source/thumbnail.png" width="260" alt="Clawd Desk Buddy"></a> | **[Clawd Desk Buddy](wallpapers/clawd-desk-buddy)** | A tiny Clawd who lives on your desktop. He follows your cursor, reacts to clicks, taps the clock and battery on the taskbar, and naps when you're away. Pet him, feed him cookies, play ball, high-five him. Five backgrounds, or use your own picture. | [**Clawd-Desk-Buddy.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-desk-buddy/Clawd-Desk-Buddy.zip) |
 | <a href="wallpapers/clawd-desk-stations"><img src="wallpapers/clawd-desk-stations/source/thumbnail.png" width="260" alt="Clawd Desk Stations"></a> | **[Clawd Desk Stations](wallpapers/clawd-desk-stations)** | A shelf of slots on your desktop icon grid, as many as you like. Drag any app's icon in and Clawd works out what it is and climbs over to play with it: he surfs, dances, games, codes, chats, paints and watches. Comes with Clawd's Eyes, a small helper that lets him see which app is where. | [**Clawd-Desk-Stations.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-desk-stations/Clawd-Desk-Stations.zip)<br>[**Clawd-Eyes.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-desk-stations/Clawd-Eyes.zip) |
 | <a href="wallpapers/clawd-tunes"><img src="wallpapers/clawd-tunes/source/thumbnail.png" width="260" alt="Clawd Tunes"></a> | **[Clawd Tunes](wallpapers/clawd-tunes)** | A music player for Spotify on your desktop, with Clawd dancing on top in his headphones. Five player styles (card, wide, slim bar, bubbles, turntable) whose buttons really control Spotify. He reads out each new song, freezes when you pause, goes wild when the beat drops, and presses buttons when you throw him at them. Comes with Clawd's Ears, a small helper that lets him hear Spotify. | [**Clawd-Tunes.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-tunes/Clawd-Tunes.zip)<br>[**Clawd-Ears.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-tunes/Clawd-Ears.zip) |
+| <a href="wallpapers/scarab-trail"><img src="wallpapers/scarab-trail/source/thumbnail.png" width="260" alt="Scarab Trail"></a> | **[Scarab Trail](wallpapers/scarab-trail)** | A low-poly 3D off-road trip from morning to night. A made-up overland pickup climbs a rocky trail, gets stuck in the mud and winches itself out, crosses a river, and pulls into camp at sunset where friends sit by the fire. | [**Scarab-Trail.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/scarab-trail/Scarab-Trail.zip) |
 
 Click a wallpaper's name to see its settings and still images. For the steps to get each one running, see [Set up each wallpaper](#set-up-each-wallpaper).
 
@@ -162,6 +163,16 @@ A Spotify player with Clawd dancing on top. It comes with a helper, **Clawd's Ea
 
 More detail: [Set it up](wallpapers/clawd-tunes#set-it-up) and [Clawd Tunes settings](wallpapers/clawd-tunes#settings). This one has no still images; it only works live.
 
+### Scarab Trail
+
+The off-road trip, from the rocky climb to the campfire. Nothing extra to set up.
+
+1. Download [**Scarab-Trail.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/scarab-trail/Scarab-Trail.zip) and drag it onto Lively. Don't unzip it.
+2. Click its tile. That's it. One trip takes about four and a half minutes, then it starts again.
+3. Optional: right-click the tile, choose **Customise**, and pick the time of day (follow the story, or always day, golden hour or night), the story speed, the camera distance, the render quality and shadows.
+
+Settings: [Scarab Trail settings](wallpapers/scarab-trail#settings). No Lively? Use its [still images](wallpapers/scarab-trail/still-images).
+
 ## No Lively? Use the still images
 
 Each wallpaper folder has a `still-images` folder with three pictures (2560 x 1600). Clawd Desk Stations and Clawd Tunes are the exceptions: they only work live. To use one:
@@ -206,7 +217,7 @@ Start Clawd's Ears (double-click **Start Clawd Ears.cmd** in the folder you unzi
 
 <br>
 
-Right-click the tile, choose **Customise**, and set **Frame rate** to **15 fps (battery saver)**.
+Right-click the tile, choose **Customise**, and set **Frame rate** to **15 fps (battery saver)**. For Scarab Trail you can also set **Render quality** to **Battery saver** and turn **Shadows** off.
 
 </details>
 
@@ -232,4 +243,4 @@ Close Lively fully from its tray icon (right-click > **Exit**), then open it aga
 
 These are unofficial fan wallpapers. You can use and share them for noncommercial purposes under the [PolyForm Noncommercial License 1.0.0](LICENSE).
 
-The Claude spark and the Clawd character belong to Anthropic, which is not affiliated with or endorsing this project, and they are not covered by that license. Keep them to personal use. Details are in [NOTICE.md](NOTICE.md).
+The Claude spark and the Clawd character belong to Anthropic, which is not affiliated with or endorsing this project, and they are not covered by that license. Keep them to personal use. Scarab Trail doesn't use any of them. Details are in [NOTICE.md](NOTICE.md).
