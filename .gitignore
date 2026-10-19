@@ -13,3 +13,6 @@ clawd-tunes-art.js.tmp
 
 # Your own unzipped copy of the Clawd Tunes helper
 wallpapers/clawd-tunes/Clawd-Ears/
+
+# The app's build output
+app/target/

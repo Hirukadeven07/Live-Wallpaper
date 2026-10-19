@@ -2,7 +2,7 @@
 
 ## What the license covers
 
-The [PolyForm Noncommercial License 1.0.0](LICENSE) covers only the original work in this repository: the wallpaper code, the dune scenes and their colors, the Scarab Trail scene and its Scarab 110 vehicle design, the settings files, the stills and thumbnails as images of those scenes, and the READMEs. You may use, copy and share that work for any noncommercial purpose, as the license describes.
+The [PolyForm Noncommercial License 1.0.0](LICENSE) covers only the original work in this repository: the wallpaper code, the dune scenes and their colors, the Scarab Trail scene and its Scarab 110 vehicle design, the settings files, the stills and thumbnails as images of those scenes, the READMEs, and the Live Wallpaper app in `app/` (its code, window and icon). You may use, copy and share that work for any noncommercial purpose, as the license describes.
 
 ## What the license does not cover
 
@@ -22,9 +22,15 @@ Those materials are included only so friends can enjoy the wallpapers on their o
 
 **Scarab Trail** has no Anthropic material. The Scarab 110 is a made-up vehicle: it isn't a real model and isn't connected to any vehicle maker. The low-poly, pastel look is a nod to off-road games such as Over the Hill by Funselektor; this project isn't connected to that game or its makers, and nothing from it is included.
 
+## The app
+
+`LiveWallpaper.exe` has the wallpapers built in, so it carries the Anthropic material listed above. The same rules apply to the exe as to the wallpapers: keep it to personal use, and don't sell it or put it in a product.
+
 ## Other software
 
 These wallpapers are made to run in [Lively Wallpaper](https://github.com/rocksdanister/lively) by rocksdanister, which is a separate program under its own license (GPL-3.0). It isn't included in this repository.
+
+The Live Wallpaper app is written from scratch and has no code from Lively. It reads the same wallpaper format and uses the same names for the calls a wallpaper receives, so wallpapers work in both. It is built with open-source Rust libraries under permissive licenses (MIT, Apache-2.0, Zlib and similar; among them `windows`, `webview2-com`, `serde`, `regex`, `zip` and `base64`), and with Microsoft's WebView2 loader from the WebView2 SDK. It draws the wallpapers with the Microsoft Edge WebView2 Runtime, which is part of Windows and isn't included here.
 
 ## Taking something down
 
