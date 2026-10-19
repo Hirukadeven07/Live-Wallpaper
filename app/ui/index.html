@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Wallpaper</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 20 20"><path d="M10 7.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6Zm6.6 3.9-.1-2.2 1.6-1.4-1.6-2.8-2 .7a6 6 0 0 0-1.9-1.1L12.2 2.2H8.8l-.4 2.1a6 6 0 0 0-1.9 1.1l-2-.7L2.9 7.5l1.6 1.4a6 6 0 0 0 0 2.2l-1.6 1.4 1.6 2.8 2-.7a6 6 0 0 0 1.9 1.1l.4 2.1h3.4l.4-2.1a6 6 0 0 0 1.9-1.1l2 .7 1.6-2.8-1.5-1.4Z" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 20 20"><rect x="5.5" y="4.5" width="3" height="11" rx="1" fill="currentColor"/><rect x="11.5" y="4.5" width="3" height="11" rx="1" fill="currentColor"/></symbol>
+  <symbol id="i-play" viewBox="0 0 20 20"><path d="M6.5 4.6v10.8a.8.8 0 0 0 1.2.7l8.4-5.4a.8.8 0 0 0 0-1.4L7.7 3.9a.8.8 0 0 0-1.2.7Z" fill="currentColor"/></symbol>
+  <symbol id="i-more" viewBox="0 0 20 20"><circle cx="4.5" cy="10" r="1.5" fill="currentColor"/><circle cx="10" cy="10" r="1.5" fill="currentColor"/><circle cx="15.5" cy="10" r="1.5" fill="currentColor"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 20 20"><path d="M1.8 10S4.8 4.5 10 4.5 18.2 10 18.2 10 15.2 15.5 10 15.5 1.8 10 1.8 10Z" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="10" cy="10" r="2.6" stroke="currentColor" stroke-width="1.5" fill="none"/></symbol>
+  <symbol id="i-check" viewBox="0 0 20 20"><path d="m4.5 10.5 3.5 3.5 7.5-8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-off" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="m5.4 14.6 9.2-9.2" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-mouse" viewBox="0 0 20 20"><rect x="5.5" y="2.5" width="9" height="15" rx="4.5" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M10 5.5v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-music" viewBox="0 0 20 20"><path d="M8 15.5V5l8-1.8v10.3" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="6" cy="15.5" r="2" fill="currentColor"/><circle cx="14" cy="13.5" r="2" fill="currentColor"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 20 20"><rect x="3" y="3" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.4" fill="none"/><rect x="11.5" y="3" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.4" fill="none"/><rect x="3" y="11.5" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.4" fill="none"/><rect x="11.5" y="11.5" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.4" fill="none"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 20 20"><path d="M2 10h2l2-5 3 10 3-8 2 5 2-2h2" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M3 10h14M10 3c2.2 2.2 2.2 11.8 0 14M10 3c-2.2 2.2-2.2 11.8 0 14" stroke="currentColor" stroke-width="1.4" fill="none"/></symbol>
+  <symbol id="i-image" viewBox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="7" cy="8.2" r="1.4" fill="currentColor"/><path d="m4 15 4.5-4.5 3 3 2-2 3 3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 20 20"><path d="m5 5 10 10M15 5 5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+</svg>
+
+<header class="bar">
+  <div class="brand"><img src="icon.png" alt=""><span>Live Wallpaper</span></div>
+  <div class="screens" id="screens" role="radiogroup" aria-label="Which screen"></div>
+  <div class="spacer"></div>
+  <button class="btn ghost" id="pause" type="button"><svg><use href="#i-pause"/></svg><span>Pause</span></button>
+  <button class="btn primary" id="add" type="button"><svg><use href="#i-plus"/></svg><span>Add wallpaper</span></button>
+  <button class="btn icon" id="gear" type="button" aria-label="App settings" title="App settings"><svg><use href="#i-gear"/></svg></button>
+</header>
+
+<div class="paused-banner" id="paused-banner" hidden>
+  Wallpapers are paused. <button class="link" id="resume" type="button">Resume</button>
+</div>
+
+<main>
+  <section class="library" aria-label="Wallpapers">
+    <div class="section-head"><h2>Wallpapers</h2></div>
+    <div class="grid" id="grid-builtin"></div>
+    <div class="section-head">
+      <h2>Your wallpapers</h2>
+      <span class="hint">Drop a .zip, web page, picture or video anywhere in this window</span>
+    </div>
+    <div class="grid" id="grid-user"></div>
+  </section>
+
+  <aside class="detail" id="detail" aria-live="polite"></aside>
+</main>
+
+<div class="drop" id="drop" hidden><div><svg><use href="#i-plus"/></svg><p>Drop to add as a wallpaper</p></div></div>
+<div class="busy" id="busy" hidden><span class="spin"></span><span id="busy-text">Adding…</span></div>
+<div class="toasts" id="toasts" role="status"></div>
+
+<div class="menu" id="menu" hidden role="menu"></div>
+
+<dialog id="prefs" aria-labelledby="prefs-title">
+  <form method="dialog" class="prefs">
+    <div class="prefs-head">
+      <h2 id="prefs-title">App settings</h2>
+      <button class="btn icon" value="close" aria-label="Close"><svg><use href="#i-x"/></svg></button>
+    </div>
+    <div class="prefs-body" id="prefs-body"></div>
+  </form>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>

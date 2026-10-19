@@ -11,7 +11,8 @@
     "min": 50,
     "max": 200,
     "step": 10,
-    "text": "Story speed (%)"
+    "text": "Story speed",
+    "unit": "%"
   },
   "camera": {
     "type": "dropdown",

@@ -4,24 +4,26 @@
 
 # Live Wallpaper
 
-**Animated desktop wallpapers for Windows.**
+**Animated desktop wallpapers for Windows, in one small app.**
 
-Each one runs inside [Lively Wallpaper](https://github.com/rocksdanister/lively), a free and open-source app.<br>
-Most also come with still images, so you can use them without installing anything.
+Download one file, open it, click a wallpaper. That's it.
 
 <p>
-  <img alt="Platform: Windows 10 and 11" src="https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-D97757?style=flat-square">
-  <img alt="Made for Lively Wallpaper" src="https://img.shields.io/badge/made%20for-Lively%20Wallpaper-141413?style=flat-square">
-  <img alt="WebGL 2" src="https://img.shields.io/badge/WebGL-2-D97757?style=flat-square">
+  <a href="https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/LiveWallpaper.exe"><img alt="Download LiveWallpaper.exe" src="https://img.shields.io/badge/download-LiveWallpaper.exe-D97757?style=for-the-badge"></a>
+</p>
+
+<p>
+  <img alt="Platform: Windows 10 and 11" src="https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-141413?style=flat-square">
+  <img alt="About 4 MB" src="https://img.shields.io/badge/size-about%204%20MB-141413?style=flat-square">
   <a href="LICENSE"><img alt="License: PolyForm Noncommercial 1.0.0" src="https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-141413?style=flat-square"></a>
   <img alt="Unofficial fan project" src="https://img.shields.io/badge/fan%20project-unofficial-D97757?style=flat-square">
 </p>
 
 <p>
+  <a href="#get-it">Get it</a> ·
   <a href="#wallpapers">Wallpapers</a> ·
-  <a href="#what-you-need">What you need</a> ·
-  <a href="#how-to-use-a-live-wallpaper">How to use</a> ·
-  <a href="#no-lively-use-the-still-images">Still images</a> ·
+  <a href="#what-it-does">What it does</a> ·
+  <a href="#your-own-wallpapers">Your own wallpapers</a> ·
   <a href="#troubleshooting">Troubleshooting</a> ·
   <a href="#license-and-notice">License</a>
 </p>
@@ -33,99 +35,80 @@ Most also come with still images, so you can use them without installing anythin
 
 ---
 
-## Wallpapers
+<img src="app/screenshot.png" width="100%" alt="The Live Wallpaper window: wallpapers on the left, the chosen one's settings on the right">
 
-| Preview | Wallpaper | What it is | Download |
-| --- | --- | --- | --- |
-| <a href="wallpapers/claude-dunes"><img src="wallpapers/claude-dunes/source/thumbnail.png" width="260" alt="Claude Dunes"></a> | **[Claude Dunes](wallpapers/claude-dunes)** | A clay-orange spark rising over slowly drifting dunes. Day, sunset and night looks. | [**Claude-Dunes.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/claude-dunes/Claude-Dunes.zip) |
-| <a href="wallpapers/clawd-dunes"><img src="wallpapers/clawd-dunes/source/thumbnail.png" width="260" alt="Clawd Dunes"></a> | **[Clawd Dunes](wallpapers/clawd-dunes)** | Clawd, the Claude Code mascot, wandering the same dunes. He walks, waves, dances, meditates and sits down at a laptop. | [**Clawd-Dunes.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-dunes/Clawd-Dunes.zip) |
-| <a href="wallpapers/clawd-desk-buddy"><img src="wallpapers/clawd-desk-buddy/source/thumbnail.png" width="260" alt="Clawd Desk Buddy"></a> | **[Clawd Desk Buddy](wallpapers/clawd-desk-buddy)** | A tiny Clawd who lives on your desktop. He follows your cursor, reacts to clicks, taps the clock and battery on the taskbar, and naps when you're away. Pet him, feed him cookies, play ball, high-five him. Five backgrounds, or use your own picture. | [**Clawd-Desk-Buddy.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-desk-buddy/Clawd-Desk-Buddy.zip) |
-| <a href="wallpapers/clawd-desk-stations"><img src="wallpapers/clawd-desk-stations/source/thumbnail.png" width="260" alt="Clawd Desk Stations"></a> | **[Clawd Desk Stations](wallpapers/clawd-desk-stations)** | A shelf of slots on your desktop icon grid, as many as you like. Drag any app's icon in and Clawd works out what it is and climbs over to play with it: he surfs, dances, games, codes, chats, paints and watches. Comes with Clawd's Eyes, a small helper that lets him see which app is where. | [**Clawd-Desk-Stations.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-desk-stations/Clawd-Desk-Stations.zip)<br>[**Clawd-Eyes.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-desk-stations/Clawd-Eyes.zip) |
-| <a href="wallpapers/clawd-tunes"><img src="wallpapers/clawd-tunes/source/thumbnail.png" width="260" alt="Clawd Tunes"></a> | **[Clawd Tunes](wallpapers/clawd-tunes)** | A music player for Spotify on your desktop, with Clawd dancing on top in his headphones. Five player styles (card, wide, slim bar, bubbles, turntable) whose buttons really control Spotify. He reads out each new song, freezes when you pause, goes wild when the beat drops, and presses buttons when you throw him at them. Comes with Clawd's Ears, a small helper that lets him hear Spotify. | [**Clawd-Tunes.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-tunes/Clawd-Tunes.zip)<br>[**Clawd-Ears.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-tunes/Clawd-Ears.zip) |
-| <a href="wallpapers/scarab-trail"><img src="wallpapers/scarab-trail/source/thumbnail.png" width="260" alt="Scarab Trail"></a> | **[Scarab Trail](wallpapers/scarab-trail)** | A low-poly 3D off-road trip from morning to night. A made-up overland pickup climbs a rocky trail, gets stuck in the mud and winches itself out, crosses a river, and pulls into camp at sunset where friends sit by the fire. | [**Scarab-Trail.zip**](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/scarab-trail/Scarab-Trail.zip) |
+## Get it
 
-Click a wallpaper's name to open its page. Each page has its own setup steps and settings, plus still images for the wallpapers that have them.
-
-## What you need
-
-- Windows 10 or 11
-- [Lively Wallpaper](#step-1-install-lively-wallpaper) (free)
-- A graphics card or integrated GPU that supports WebGL 2. Any PC from the last several years does. If yours doesn't, the wallpaper shows a simpler version of the scene instead of failing.
-
-## How to use a live wallpaper
-
-### Step 1: Install Lively Wallpaper
-
-Pick one way. Skip this step if you already have Lively.
-
-- **Microsoft Store:** [Lively Wallpaper on the Microsoft Store](https://apps.microsoft.com/detail/9ntm2qc6qws7) (publisher: Sketches SRL, the developer's company). Click **Get**.
-- **Direct download:** [Lively releases on GitHub](https://github.com/rocksdanister/lively/releases). Under the newest release, download the file named `lively_setup_x86_full_...exe` and run it.
-- **Command line:** open PowerShell and run:
-
-  ```powershell
-  winget install --id rocksdanister.LivelyWallpaper --source winget
-  ```
-
-If the Microsoft Store install fails with an error code, use the direct download or the command line instead.
-
-### Step 2: Download the wallpaper
-
-Click the download link in the [table above](#wallpapers), or use the one from the wallpaper's own folder. You get a `.zip` file.
-
-> [!IMPORTANT]
-> **Don't unzip the wallpaper's zip.** Lively reads it as it is. (Clawd Desk Stations and Clawd Tunes also come with a small helper in a second zip. That one you do unzip; see the [Clawd Desk Stations](wallpapers/clawd-desk-stations#set-it-up) and [Clawd Tunes](wallpapers/clawd-tunes#set-it-up) pages.)
-
-### Step 3: Add it to Lively
-
-1. Open Lively. If you can't see it, click its icon in the system tray (bottom-right of the taskbar, behind the `^` arrow).
-2. **Drag the `.zip` file onto the Lively window.**
-   Or click the **+** button at the top of Lively, choose to add a wallpaper from a file, and select the `.zip`.
-3. Click **Import** or **Add** if Lively asks you to confirm.
-
-### Step 4: Set it as your wallpaper
-
-Click the wallpaper's tile in Lively's library. It becomes your desktop background straight away.
+1. **Download [LiveWallpaper.exe](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/LiveWallpaper.exe)** (about 4 MB). It's the whole app, with every wallpaper inside. There's nothing to install and nothing else to download.
+2. **Open it.** Windows may say "Windows protected your PC", because the app is new and isn't signed. Click **More info**, then **Run anyway**.
+3. **Click a wallpaper.** It goes straight onto your desktop. Its settings are on the right, and every change shows on the desktop as you make it.
+4. **Close the window whenever you like.** The wallpaper keeps playing, and Live Wallpaper waits in the tray by the clock (maybe behind the `^` arrow). Click it to come back; right-click it to pause or quit.
 
 > [!TIP]
-> To see it, minimize your windows or press **Win + D**.
+> Put `LiveWallpaper.exe` somewhere it can stay, such as your Documents folder, before you open it. It starts with Windows from wherever it is. If you move it later, just open it once from the new place.
 
-### Step 5: Finish setting it up
+You need Windows 10 or 11. Windows 11 has everything the app needs. On Windows 10 it uses the Microsoft Edge WebView2 Runtime, which almost every PC already has; if yours doesn't, the app tells you and opens the download page.
 
-Some wallpapers need one or two more steps, such as letting them see your mouse or starting their helper. Open the wallpaper's page from the [table above](#wallpapers) and follow its **Set it up** steps.
+## Wallpapers
 
-To change how a wallpaper looks or behaves, right-click its tile in Lively and choose **Customise**.
+All of these come inside the app. Click a name for more about it: what to try, every setting, and still images.
 
-### Go back to your old wallpaper
+| Preview | Wallpaper | What it is |
+| --- | --- | --- |
+| <a href="wallpapers/claude-dunes"><img src="wallpapers/claude-dunes/source/thumbnail.png" width="260" alt="Claude Dunes"></a> | **[Claude Dunes](wallpapers/claude-dunes)** | A clay-orange spark rising over slowly drifting dunes. Day, sunset and night looks. |
+| <a href="wallpapers/clawd-dunes"><img src="wallpapers/clawd-dunes/source/thumbnail.png" width="260" alt="Clawd Dunes"></a> | **[Clawd Dunes](wallpapers/clawd-dunes)** | Clawd, the Claude Code mascot, wandering the same dunes. He walks, waves, dances, meditates and sits down at a laptop. |
+| <a href="wallpapers/clawd-desk-buddy"><img src="wallpapers/clawd-desk-buddy/source/thumbnail.png" width="260" alt="Clawd Desk Buddy"></a> | **[Clawd Desk Buddy](wallpapers/clawd-desk-buddy)** | A tiny Clawd who lives on your desktop. He follows your cursor, reacts to clicks, taps the clock and battery on the taskbar, and naps when you're away. Pet him, feed him cookies, play ball, high-five him. Five backgrounds, or use your own picture. |
+| <a href="wallpapers/clawd-desk-stations"><img src="wallpapers/clawd-desk-stations/source/thumbnail.png" width="260" alt="Clawd Desk Stations"></a> | **[Clawd Desk Stations](wallpapers/clawd-desk-stations)** | A shelf of slots on your desktop icon grid, as many as you like. Drag any app's icon in and Clawd works out what it is and climbs over to play with it: he surfs, dances, games, codes, chats, paints and watches. |
+| <a href="wallpapers/clawd-tunes"><img src="wallpapers/clawd-tunes/source/thumbnail.png" width="260" alt="Clawd Tunes"></a> | **[Clawd Tunes](wallpapers/clawd-tunes)** | A music player for Spotify on your desktop, with Clawd dancing on top in his headphones. Five player styles whose buttons really control Spotify. He reads out each new song, freezes when you pause, goes wild when the beat drops, and presses buttons when you throw him at them. |
+| <a href="wallpapers/scarab-trail"><img src="wallpapers/scarab-trail/source/thumbnail.png" width="260" alt="Scarab Trail"></a> | **[Scarab Trail](wallpapers/scarab-trail)** | A low-poly 3D off-road trip from morning to night. A made-up overland pickup climbs a rocky trail, gets stuck in the mud and winches itself out, crosses a river, and pulls into camp at sunset where friends sit by the fire. |
 
-In Lively, right-click the wallpaper that is playing and choose **Close wallpaper**, or pick another tile. To remove a wallpaper completely, right-click its tile and choose **Delete**.
+## What it does
 
-## No Lively? Use the still images
+- **Everything's built in.** No zips to import, and no helpers to start for Clawd Desk Stations (your desktop icons) or Clawd Tunes (Spotify).
+- **The mouse just works.** Wallpapers that play with your cursor react to it over the bare desktop, with no setting to find.
+- **Saves power by itself.** A wallpaper stops while a maximised or full-screen app covers its screen. After a few seconds it's also frozen and gives memory back. Locking the PC or turning the screen off does the same. You can also pause on battery, or pause by hand from the tray.
+- **One wallpaper per screen**, or the same one on all of them. With more than one screen, pick the screen at the top of the window first.
+- **Light.** The app itself uses a few megabytes; the rest is the wallpaper being drawn.
+- **Quits cleanly.** Quit from the tray and your normal Windows wallpaper comes back.
 
-Each wallpaper folder has a `still-images` folder with three pictures (2560 x 1600). Clawd Desk Stations and Clawd Tunes are the exceptions: they only work live. To use one:
+The gear at the top right of the window has the app's own settings: Start with Windows, pausing, the mouse, and developer mode.
 
-1. Open the wallpaper's folder on GitHub and open the `still-images` folder.
-2. Click an image, then click the download button (the arrow icon) on the right.
-3. Right-click the downloaded file and choose **Set as desktop background**.
+## Your own wallpapers
 
-If your screen has a different shape, open **Settings > Personalization > Background** and set **Choose a fit** to **Fill**.
+Drop any of these onto the window, or press **Add wallpaper**:
+
+- a **Lively Wallpaper `.zip`** (web wallpapers, pictures and videos),
+- a **web page** (`.html`) or a folder with an `index.html` in it,
+- a **picture** or a **video**, which becomes a wallpaper with fit, position and colour settings (and sound and speed for videos).
+
+To make your own from scratch, turn on **Developer mode** in the app's settings and press **Start a new wallpaper**. [app/README.md](app/README.md#making-your-own-wallpaper) explains the format, which is the same one Lively uses, so a wallpaper made for either works in both.
 
 ## Troubleshooting
+
+<details>
+<summary><b>Windows says "Windows protected your PC".</b></summary>
+
+<br>
+
+That's SmartScreen being careful with a new app that isn't signed. Click **More info**, then **Run anyway**. You only see it the first time.
+
+</details>
 
 <details>
 <summary><b>The wallpaper doesn't move.</b></summary>
 
 <br>
 
-Lively pauses wallpapers by design when another window is maximized or covering the desktop, and on battery power if you've enabled that. Minimize your windows or press **Win + D** and it will start moving. You can change these rules in Lively's settings.
+It pauses while an app is maximised or full screen on that screen, and when you've paused it from the tray (a banner at the top of the window says so). Minimise your windows or press **Win + D** and it starts again straight away. You can turn the pausing off in the app's settings.
 
 </details>
 
 <details>
-<summary><b>Clawd doesn't react to my cursor or clicks, or the player's buttons don't work.</b></summary>
+<summary><b>Clawd doesn't react to my cursor or clicks.</b></summary>
 
 <br>
 
-Lively only passes the mouse to a wallpaper when you allow it. Open Lively's **Settings**, go to **Wallpaper**, and set **Wallpaper input** to **Mouse**. The wallpaper only sees the mouse while it's over the desktop, not over other windows.
+He only sees the mouse while it's over the bare desktop, not over other windows. If he still doesn't react, check that **Let wallpapers react to the mouse** is on in the app's settings.
 
 </details>
 
@@ -134,7 +117,16 @@ Lively only passes the mouse to a wallpaper when you allow it. Open Lively's **S
 
 <br>
 
-Start Clawd's Ears (double-click **Start Clawd Ears.cmd** in the folder you unzipped it to) and play something in the Spotify app. The Spotify web player in a browser doesn't count. See [Set it up](wallpapers/clawd-tunes#set-it-up).
+Play something in the Spotify app. The Spotify web player in a browser doesn't count, because Windows reports that as the browser playing.
+
+</details>
+
+<details>
+<summary><b>Clawd Desk Stations' shelf doesn't line up with my icons.</b></summary>
+
+<br>
+
+Right-click the desktop, open **View**, turn **Auto arrange icons** off and **Align icons to grid** on. Then press **Find a new spot** in the wallpaper's settings.
 
 </details>
 
@@ -143,7 +135,7 @@ Start Clawd's Ears (double-click **Start Clawd Ears.cmd** in the folder you unzi
 
 <br>
 
-Right-click the tile, choose **Customise**, and set **Frame rate** to **15 fps (battery saver)**. For Scarab Trail you can also set **Render quality** to **Battery saver** and turn **Shadows** off.
+Set the wallpaper's **Frame rate** to **15 fps (battery saver)**. For Scarab Trail you can also set **Render quality** to **Battery saver** and turn **Shadows** off. Or turn on **Pause on battery power** in the app's settings.
 
 </details>
 
@@ -152,21 +144,43 @@ Right-click the tile, choose **Customise**, and set **Frame rate** to **15 fps (
 
 <br>
 
-Your graphics driver may not support WebGL 2, so you're seeing the fallback version. Updating your graphics driver usually fixes it.
+Your graphics driver may not support WebGL 2, so you're seeing the simpler version of the scene. Updating your graphics driver usually fixes it.
 
 </details>
 
 <details>
-<summary><b>The tile doesn't appear after adding the zip.</b></summary>
+<summary><b>I used Lively Wallpaper before.</b></summary>
 
 <br>
 
-Close Lively fully from its tray icon (right-click > **Exit**), then open it again.
+Close Lively (or stop its wallpaper) so the two don't both draw on the desktop. The old Clawd's Eyes and Clawd's Ears helpers aren't needed any more; quit them from their tray icons and untick their **Start with Windows**. If you'd still rather use Lively, each wallpaper's page has its Lively zip.
 
 </details>
 
+<details>
+<summary><b>How do I remove it?</b></summary>
+
+<br>
+
+Right-click the tray icon and untick **Start with Windows**, then choose **Quit**. Delete `LiveWallpaper.exe`, and delete the folder `%LOCALAPPDATA%\LiveWallpaper` (paste that into the File Explorer address bar) to remove its settings and your added wallpapers too.
+
+</details>
+
+<details>
+<summary><b>Something else is wrong.</b></summary>
+
+<br>
+
+Problems are written to `%LOCALAPPDATA%\LiveWallpaper\app.log`. Open an issue and include what's in it.
+
+</details>
+
+## Building it yourself
+
+The app is written in Rust and lives in [app/](app). [app/README.md](app/README.md#building-it) explains how to build it and how it works.
+
 ## License and notice
 
-These are unofficial fan wallpapers. You can use and share them for noncommercial purposes under the [PolyForm Noncommercial License 1.0.0](LICENSE).
+These are unofficial fan wallpapers and an unofficial fan app. You can use and share them for noncommercial purposes under the [PolyForm Noncommercial License 1.0.0](LICENSE).
 
 The Claude spark and the Clawd character belong to Anthropic, which is not affiliated with or endorsing this project, and they are not covered by that license. Keep them to personal use. Scarab Trail doesn't use any of them. Details are in [NOTICE.md](NOTICE.md).
