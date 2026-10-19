@@ -6,36 +6,19 @@ It listens to Spotify only. Other apps' music doesn't count.
 
 ![Clawd Tunes](source/thumbnail.png)
 
-## Download
+## Use it
 
-You need both files:
-
-- **The wallpaper (Lively):** [Clawd-Tunes.zip](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-tunes/Clawd-Tunes.zip). Don't unzip it; drag it onto the Lively window.
-- **Clawd's Ears (the helper):** [Clawd-Ears.zip](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-tunes/Clawd-Ears.zip). This one you do unzip. It's what lets Clawd hear Spotify and press its buttons.
-
-New to Lively? Follow the [step-by-step instructions](../../README.md#how-to-use-a-live-wallpaper) on the main page first.
-
-## Set it up
-
-1. **Add the wallpaper to Lively** and click its tile.
-2. **Let the player see your mouse.** In Lively, open **Settings**, go to **Wallpaper**, and set **Wallpaper input** to **Mouse**. Without this the buttons can't be clicked.
-3. **Start Clawd's Ears.** Unzip `Clawd-Ears.zip` somewhere you'll keep it, such as your Documents folder. Then double-click **Start Clawd Ears.cmd**. A small Clawd with headphones appears in the system tray (bottom right, maybe behind the `^` arrow). To have it start by itself every time, right-click that Clawd and tick **Start with Windows**.
-4. **Play something in the Spotify app.** The player fills in, Clawd puts his headphones on and starts dancing.
+1. Open [Live Wallpaper](../../README.md#get-it) and click **Clawd Tunes**. It hears Spotify and takes your clicks by itself; there's no helper to start and no setting to switch on.
+2. **Play something in the Spotify app.** The player fills in, Clawd puts his headphones on and starts dancing.
 
 > [!NOTE]
 > It works with the Spotify app for Windows, from Spotify's website or the Microsoft Store. The Spotify web player in a browser doesn't count, because Windows reports that as the browser playing.
 
-Want to see it before setting anything up? Right-click the wallpaper in Lively, choose **Customise**, and tick **Play made-up demo songs until Spotify is linked**.
+Want to see it without Spotify? Tick **Play made-up demo songs until Spotify is linked** in its settings.
 
 ## The players
 
 Pick one with **Player style**.
-
-## Putting the player where you want it
-
-- **Drag it.** Press on an empty part of the player and drag. It stays where you leave it.
-- **Or pick a spot in the settings.** **Where the player sits** has six ready-made spots, and **Your own spot** lets you place it with two sliders: across (0 is the far left, 100 the far right) and down (0 is the top, 100 just above the taskbar). 50 and 50 is the middle of the screen.
-- **It keeps its distance from the edges.** However you place it, it stays **Space between the player and the screen edges** away from every edge and the taskbar (40 px unless you change it), so it never jams into a corner. There's always room above it for Clawd.
 
 | Style | What it looks like | What Clawd does there |
 | --- | --- | --- |
@@ -52,6 +35,13 @@ Pick one with **Player style**.
   <img src="previews/clawd-tunes-bubbles.png" width="49%" alt="Bubbles, Frosted glass, on Clay glow">
   <img src="previews/clawd-tunes-turntable.png" width="49%" alt="Turntable, Clay, on Dunes">
 </p>
+
+## Putting the player where you want it
+
+- **Drag it.** Press on an empty part of the player and drag. It stays where you leave it.
+- **Or pick a spot in the settings.** **Where the player sits** has six ready-made spots. **Your own spot** lets you place it anywhere with the **Horizontal position** (left to right) and **Vertical position** (top to just above the taskbar) sliders. 50% and 50% is the middle of the screen.
+- **It keeps its distance from the edges.** However you place it, it stays **Gap from the screen edges** away from every edge and the taskbar (40 px unless you change it), so it never jams into a corner. There's always room above it for Clawd.
+- **Put it back.** The **Put it back** button returns the player to where it started (bottom left, 40 px from the edges) and undoes any dragging.
 
 ## Using the player
 
@@ -105,30 +95,24 @@ And you can play with him:
 | Click a steady beat on the empty desktop (no music playing) | Dances to your beat |
 | Drag the player away | "whoa, earthquake!" He rides along |
 
-## Without Clawd's Ears
-
-Without the helper, the player says **Spotify isn't linked** and Clawd tells you he can't hear anything. Windows doesn't let wallpapers see what other apps are doing, so the helper is the only way in.
-
-If the helper is running but the buttons don't do anything, something on your PC is stopping the wallpaper from reaching the helper (see [About Clawd's Ears](#about-clawds-ears)). The song, cover and Clawd's dancing still work in that case; only the buttons don't.
-
 ## Settings
 
-Right-click the wallpaper in Lively and choose **Customise**.
+They're on the right of the Live Wallpaper window while Clawd Tunes is selected, and every change shows on the desktop straight away.
 
 | Setting | Options | Default |
 | --- | --- | --- |
 | Player style | Classic card, Wide, Slim bar, Bubbles, Turntable | Classic card |
 | Where the player sits | Bottom left, Bottom right, Bottom middle, Top left, Top right, Middle of the screen, Your own spot | Bottom left |
-| Your own spot: across | 0 (left) to 100 (right), when the spot above is **Your own spot** | 0 |
-| Your own spot: down | 0 (top) to 100 (bottom), when the spot above is **Your own spot** | 100 |
-| Space between the player and the screen edges | 0 to 200 px | 40 px |
-| Dragged the player somewhere? | **Put it back** button | |
+| Horizontal position | 0% (left) to 100% (right), when the spot above is **Your own spot** | 0% |
+| Vertical position | 0% (top) to 100% (bottom), when the spot above is **Your own spot** | 100% |
+| Gap from the screen edges | 0 to 200 px | 40 px |
+| Put the player back where it started | **Put it back** button | |
 | Player size | Small, Medium, Large | Medium |
 | Player colours | Match the album cover, Charcoal, Clay, Frosted glass, Paper | Match the album cover |
 | Music visualiser | Off, Bars along the bottom, Glow around the player, Bars and glow | Bars and glow |
 | Time on the right | Time left, Song length | Time left |
 | Background | Album glow, Stage lights, Paper, Dunes, Clay glow, Your own picture | Album glow |
-| Your own picture | Any picture you add with the **+** button | Claude Dunes at sunset |
+| Your own picture | Any picture you add with the **+** tile under the pictures | Claude Dunes at sunset |
 | Appearance | Match Windows, Light, Dark, Follow the clock | Match Windows |
 | Clawd size | Tiny, Small, Medium | Small |
 | How much Clawd dances | Chill, Normal, Party | Normal |
@@ -142,29 +126,28 @@ Right-click the wallpaper in Lively and choose **Customise**.
 
 **Match the album cover** and **Album glow** take their colours from the cover of whatever's playing, and fade to the next song's colours when it changes. **Stage lights** swing faster when the song is louder.
 
-**Music visualiser:** the bars follow what your speakers are playing, which Lively passes to the wallpaper. They only move while Spotify is playing, so a YouTube video in the background doesn't set them off. If Lively's sound isn't available, they follow how loud Spotify is instead.
+**Music visualiser:** the bars follow what your speakers are playing. They only move while Spotify is playing, so a YouTube video in the background doesn't set them off.
 
-**Where the player sits:** changing this, or moving the **Your own spot** sliders, puts the player back in that spot, even if you'd dragged it somewhere else.
+**Where the player sits:** changing this, or moving the position sliders, puts the player back in that spot, even if you'd dragged it somewhere else.
 
-## About Clawd's Ears
+## How Clawd hears Spotify
 
-Clawd's Ears is a short PowerShell script (`clawd-ears.ps1`) that you can open and read. Several times a second it:
+Live Wallpaper has Clawd's Ears built in. While this wallpaper is showing, several times a second it:
 
 1. Asks Windows' media controls what Spotify is playing: the song, artist, album, cover, position, and whether it's playing, shuffled or on repeat. These are the same controls behind the media pop-up you get when you press a volume key.
 2. Asks the Windows volume mixer how loud Spotify is right now, and where its volume slider is.
-3. Writes that to `clawd-tunes-data.js` (and the cover to `clawd-tunes-art.js`) inside the wallpaper's folder in Lively's library, where the wallpaper reads it.
+3. Hands that to the wallpaper, in memory.
 
-For the player's buttons, it also answers the wallpaper on `127.0.0.1` port 47823, which is reachable from this PC only. Every request has to carry a random key that changes each time the helper starts and is only written into the wallpaper's own folder, so websites you visit can't use it or see what you're listening to.
+The player's buttons go to it the same way. No network port is opened, and only this wallpaper can reach it. It never signs in to Spotify or sees your account, and nothing leaves your PC. It only changes something when you click a button on the player (or throw Clawd at one), and it stops by itself when you switch to another wallpaper.
 
-It never signs in to Spotify or sees your account, and nothing leaves your PC. It only changes something when you click a button on the player (or throw Clawd at one).
+## Using Lively instead?
 
-- **Stop it:** right-click the Clawd in the system tray and choose **Quit**. The player switches to "Spotify isn't linked".
-- **Start it with Windows:** right-click the tray Clawd and tick **Start with Windows**. This adds a shortcut to your Startup folder; untick it to remove the shortcut.
-- **If something's wrong:** problems are written to `clawd-ears.log` in your temp folder (type `%TEMP%` in the File Explorer address bar).
-- **Buttons don't work, but the song shows:** another program is already using port 47823, or security software is blocking it. The log says which.
+In [Lively Wallpaper](https://github.com/rocksdanister/lively) this wallpaper needs two downloads:
 
-> [!TIP]
-> If Windows won't run **Start Clawd Ears.cmd** after you download it, right-click `Clawd-Ears.zip`, choose **Properties**, tick **Unblock**, click **OK**, and unzip it again.
+- [Clawd-Tunes.zip](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-tunes/Clawd-Tunes.zip): drag it (don't unzip it) onto Lively's window and click its tile. Set Lively's **Settings > Wallpaper > Wallpaper input** to **Mouse**, or the buttons can't be clicked.
+- [Clawd-Ears.zip](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-tunes/Clawd-Ears.zip), the helper that lets Clawd hear Spotify under Lively: unzip it somewhere you'll keep it and double-click **Start Clawd Ears.cmd**. It sits in the tray; right-click it for **Start with Windows** and **Quit**. If Windows won't run it, right-click the zip, choose **Properties**, tick **Unblock**, and unzip it again. It answers the player's buttons on `127.0.0.1` port 47823 with a random key; if the song shows but the buttons don't work, something else is using that port, and `clawd-ears.log` in `%TEMP%` says what.
+
+Under Lively, **Put it back** only undoes dragging; it can't move Lively's sliders.
 
 ## Notes
 

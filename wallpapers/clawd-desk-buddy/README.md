@@ -4,19 +4,11 @@ A tiny Clawd who lives on your desktop. He wanders around the whole screen, foll
 
 ![Clawd Desk Buddy](source/thumbnail.png)
 
-## Download
+## Use it
 
-- **Live wallpaper (Lively):** [Clawd-Desk-Buddy.zip](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-desk-buddy/Clawd-Desk-Buddy.zip). Don't unzip it; drag it onto the Lively window.
-- **Still images (no app needed):** the [still-images](still-images) folder.
-
-New to this? Follow the [step-by-step instructions](../../README.md#how-to-use-a-live-wallpaper) on the main page.
-
-## Set it up
-
-1. **Add the wallpaper to Lively** and click its tile.
-2. **Let Clawd see your mouse (needed).** In Lively, open **Settings**, go to **Wallpaper**, and set **Wallpaper input** to **Mouse**. Without this he can't follow your cursor or react to clicks.
-3. **Press Win + D and try it.** Rest your cursor somewhere, click him, rub the cursor over him, or double-click empty desktop for a ball. The full list is in [Things to try](#things-to-try).
-4. Optional: right-click the tile and choose **Customise** for the background (or your own picture), Clawd's size, naps and toys.
+1. Open [Live Wallpaper](../../README.md#get-it) and click **Clawd Desk Buddy**. He already sees your mouse; there's nothing to switch on.
+2. **Press Win + D and try it.** Rest your cursor somewhere, click him, rub the cursor over him, or double-click empty desktop for a ball. The full list is in [Things to try](#things-to-try).
+3. Optional: pick a background (or your own picture), Clawd's size, naps and toys on the right of the app's window.
 
 ## Things to try
 
@@ -66,16 +58,16 @@ New to this? Follow the [step-by-step instructions](../../README.md#how-to-use-a
 | The battery drops to 20% or 10% | He goes and warns you |
 | On the hour | He taps the clock: "ding! 3 PM" |
 
-He walks on the top edge of your taskbar. Lively draws wallpapers behind the taskbar, so he taps the clock and battery from just above them rather than on top of them.
+He walks on the top edge of your taskbar. Wallpapers are drawn behind the taskbar, so he taps the clock and battery from just above them rather than on top of them.
 
 ## Settings
 
-Right-click the wallpaper in Lively and choose **Customise**.
+They're on the right of the Live Wallpaper window while Clawd Desk Buddy is selected, and every change shows on the desktop straight away.
 
 | Setting | Options | Default |
 | --- | --- | --- |
 | Background | Paper, Graph paper, Midnight terminal, Dunes, Clay glow, Your own picture | Graph paper |
-| Your own picture | Any picture you add with the **+** button. Used when Background is set to Your own picture. | Claude Dunes at sunset |
+| Your own picture | Any picture you add with the **+** tile under the pictures. Used when Background is set to Your own picture. | Claude Dunes at sunset |
 | Appearance | Match Windows, Light, Dark, Follow the clock | Match Windows |
 | Clawd size | Tiny, Small, Medium | Tiny |
 | Where Clawd walks | The whole screen, or only along the taskbar | The whole screen |
@@ -102,6 +94,10 @@ All are 2560 x 1600. Clawd is tiny on purpose, standing just above where the tas
 | Graph paper (dancing) | Midnight terminal (at the laptop) | Dunes at night (asleep) |
 | --- | --- | --- |
 | [clawd-desk-buddy-graph-paper.png](still-images/clawd-desk-buddy-graph-paper.png) | [clawd-desk-buddy-terminal.png](still-images/clawd-desk-buddy-terminal.png) | [clawd-desk-buddy-dunes-night.png](still-images/clawd-desk-buddy-dunes-night.png) |
+
+## Using Lively instead?
+
+[Clawd-Desk-Buddy.zip](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-desk-buddy/Clawd-Desk-Buddy.zip) works in [Lively Wallpaper](https://github.com/rocksdanister/lively). Drag the zip (don't unzip it) onto Lively's window and click its tile, then set Lively's **Settings > Wallpaper > Wallpaper input** to **Mouse** so Clawd can see your cursor.
 
 ## Notes
 

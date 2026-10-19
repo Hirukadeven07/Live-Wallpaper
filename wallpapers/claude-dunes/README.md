@@ -4,26 +4,18 @@ A clay-orange spark rising over five layers of slowly drifting dunes. The sky fo
 
 ![Claude Dunes](source/thumbnail.png)
 
-## Download
+## Use it
 
-- **Live wallpaper (Lively):** [Claude-Dunes.zip](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/claude-dunes/Claude-Dunes.zip). Don't unzip it; drag it onto the Lively window.
-- **Still images (no app needed):** the [still-images](still-images) folder.
-
-New to this? Follow the [step-by-step instructions](../../README.md#how-to-use-a-live-wallpaper) on the main page.
-
-## Set it up
-
-1. **Add the wallpaper to Lively** and click its tile. That's it; there's nothing else to set up.
-2. Optional: right-click the tile, choose **Customise**, and pick the look (match Windows, light, dark or follow the clock), how fast the dunes drift, and stars or paper grain.
+Open [Live Wallpaper](../../README.md#get-it) and click **Claude Dunes**. That's all; there's nothing to set up.
 
 ## Settings
 
-Right-click the wallpaper in Lively and choose **Customise**.
+They're on the right of the Live Wallpaper window while Claude Dunes is selected, and every change shows on the desktop straight away.
 
 | Setting | Options | Default |
 | --- | --- | --- |
 | Appearance | Match Windows, Light, Dark, Follow the clock | Match Windows |
-| Motion speed (%) | 0 to 300. At 0 the dunes stand still. | 100 |
+| Motion speed | 0 to 300%. At 0 the dunes stand still. | 100% |
 | Frame rate | 15, 30 or 60 fps | 30 fps |
 | Stars at night | On or off | On |
 | Paper grain | On or off | On |
@@ -32,11 +24,15 @@ Right-click the wallpaper in Lively and choose **Customise**.
 
 ## Still images
 
-All are 2560 x 1600.
+All are 2560 x 1600, if you'd like a plain picture instead.
 
 | Night | Day | Sunset |
 | --- | --- | --- |
 | [claude-dunes-night.png](still-images/claude-dunes-night.png) | [claude-dunes-day.png](still-images/claude-dunes-day.png) | [claude-dunes-sunset.png](still-images/claude-dunes-sunset.png) |
+
+## Using Lively instead?
+
+[Claude-Dunes.zip](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/claude-dunes/Claude-Dunes.zip) works in [Lively Wallpaper](https://github.com/rocksdanister/lively). Drag the zip (don't unzip it) onto Lively's window and click its tile.
 
 ## Notes
 

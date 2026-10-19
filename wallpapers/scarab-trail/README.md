@@ -4,21 +4,13 @@ A low-poly off-road trip that plays out on your desktop from morning to night. T
 
 ![Scarab Trail](source/thumbnail.png)
 
-## Download
+## Use it
 
-- **Live wallpaper (Lively):** [Scarab-Trail.zip](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/scarab-trail/Scarab-Trail.zip). Don't unzip it; drag it onto the Lively window.
-- **Still images (no app needed):** the [still-images](still-images) folder.
-
-New to this? Follow the [step-by-step instructions](../../README.md#how-to-use-a-live-wallpaper) on the main page.
-
-## Set it up
-
-1. **Add the wallpaper to Lively** and click its tile. That's it; there's nothing else to set up. One trip takes about four and a half minutes, then it starts again.
-2. Optional: right-click the tile, choose **Customise**, and pick the time of day (follow the story, or always day, golden hour or night), the story speed, the camera distance, the render quality and shadows.
+Open [Live Wallpaper](../../README.md#get-it) and click **Scarab Trail**. That's all; there's nothing to set up. One trip takes about four and a half minutes, then it starts again.
 
 ## The story
 
-One trip takes about four and a half minutes, then it starts again. Times are at the normal story speed.
+Times are at the normal story speed.
 
 | When | What happens |
 | --- | --- |
@@ -35,12 +27,12 @@ The Scarab 110 Crew Cab is a fictional overlander. Its emerald paint shifts to p
 
 ## Settings
 
-Right-click the wallpaper in Lively and choose **Customise**.
+They're on the right of the Live Wallpaper window while Scarab Trail is selected, and every change shows on the desktop straight away.
 
 | Setting | Options | Default |
 | --- | --- | --- |
 | Time of day | Follow the story (morning to night), Always daytime, Always golden hour, Always night | Follow the story |
-| Story speed (%) | 50 to 200 | 100 |
+| Story speed | 50 to 200% | 100% |
 | Camera | Close, Medium, Far | Medium |
 | Frame rate | 15, 30 or 60 fps | 30 fps |
 | Render quality | Battery saver, Balanced, High (full resolution) | Balanced |
@@ -50,11 +42,15 @@ This is a full 3D scene, so it works the graphics chip harder than the other wal
 
 ## Still images
 
-All are 2560 x 1600.
+All are 2560 x 1600, if you'd like a plain picture instead.
 
 | Day (the rocky climb) | Sunset (heading for camp) | Night (at camp) |
 | --- | --- | --- |
 | [scarab-trail-day.png](still-images/scarab-trail-day.png) | [scarab-trail-sunset.png](still-images/scarab-trail-sunset.png) | [scarab-trail-night.png](still-images/scarab-trail-night.png) |
+
+## Using Lively instead?
+
+[Scarab-Trail.zip](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/scarab-trail/Scarab-Trail.zip) works in [Lively Wallpaper](https://github.com/rocksdanister/lively). Drag the zip (don't unzip it) onto Lively's window and click its tile.
 
 ## Notes
 

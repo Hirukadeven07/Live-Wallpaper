@@ -9,36 +9,42 @@
     "type": "dropdown",
     "value": 0,
     "text": "Where the player sits",
-    "items": ["Bottom left", "Bottom right", "Bottom middle", "Top left", "Top right", "Middle of the screen", "Your own spot (use the two sliders below)"]
+    "items": ["Bottom left", "Bottom right", "Bottom middle", "Top left", "Top right", "Middle of the screen", "Your own spot (set it below)"]
   },
   "spotX": {
     "type": "slider",
     "value": 0,
-    "text": "Your own spot: across (0 = left, 100 = right)",
+    "text": "Horizontal position",
     "min": 0,
     "max": 100,
-    "step": 1
+    "step": 1,
+    "unit": "%",
+    "ends": ["Left", "Right"]
   },
   "spotY": {
     "type": "slider",
     "value": 100,
-    "text": "Your own spot: down (0 = top, 100 = bottom)",
+    "text": "Vertical position",
     "min": 0,
     "max": 100,
-    "step": 1
+    "step": 1,
+    "unit": "%",
+    "ends": ["Top", "Bottom"]
   },
   "margin": {
     "type": "slider",
     "value": 40,
-    "text": "Space between the player and the screen edges (px)",
+    "text": "Gap from the screen edges",
     "min": 0,
     "max": 200,
-    "step": 4
+    "step": 4,
+    "unit": " px"
   },
   "resetPlace": {
     "type": "button",
     "value": "Put it back",
-    "text": "Dragged the player somewhere?"
+    "text": "Put the player back where it started",
+    "resets": ["place", "spotX", "spotY", "margin"]
   },
   "psize": {
     "type": "dropdown",

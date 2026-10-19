@@ -4,23 +4,12 @@ A shelf of slots sits on your desktop's icon grid, as many as you like. Drag any
 
 ![Clawd Desk Stations](source/thumbnail.png)
 
-## Download
+## Use it
 
-You need both files:
-
-- **The wallpaper (Lively):** [Clawd-Desk-Stations.zip](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-desk-stations/Clawd-Desk-Stations.zip). Don't unzip it; drag it onto the Lively window.
-- **Clawd's Eyes (the helper):** [Clawd-Eyes.zip](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-desk-stations/Clawd-Eyes.zip). This one you do unzip. It's what lets Clawd see which app is in which slot.
-
-New to Lively? Follow the [step-by-step instructions](../../README.md#how-to-use-a-live-wallpaper) on the main page first.
-
-## Set it up
-
-1. **Add the wallpaper to Lively** and click its tile.
-2. **Let Clawd see your mouse.** In Lively, open **Settings**, go to **Wallpaper**, and set **Wallpaper input** to **Mouse**.
-3. **Start Clawd's Eyes.** Unzip `Clawd-Eyes.zip` somewhere you'll keep it, such as your Documents folder. Then double-click **Start Clawd Eyes.cmd**. A small Clawd appears in the system tray (bottom right, maybe behind the `^` arrow). To have it start by itself every time, right-click that Clawd and tick **Start with Windows**.
-4. **Show your icons, and let them stay where you put them.** Right-click an empty spot on the desktop and open **View**. Make sure **Show desktop icons** is ticked, turn **Auto arrange icons** off, and turn **Align icons to grid** on. If your icons are hidden, a note under the shelf reminds you.
-5. **Pick how many slots you want.** Right-click the wallpaper in Lively, choose **Customise**, and set **How many slots** (1 to 100) and **Slots in each row**.
-6. **Fill the slots.** Drag an app's icon from your desktop into a slot. Only the icons on your desktop count; to add an app, drag it there from the Start menu first.
+1. Open [Live Wallpaper](../../README.md#get-it) and click **Clawd Desk Stations**. Clawd sees your mouse and your desktop icons by himself; there's no helper to start.
+2. **Show your icons, and let them stay where you put them.** Right-click an empty spot on the desktop and open **View**. Make sure **Show desktop icons** is ticked, turn **Auto arrange icons** off, and turn **Align icons to grid** on. If your icons are hidden, a note under the shelf reminds you.
+3. **Pick how many slots you want** on the right of the app's window: **How many slots** (1 to 100) and **Slots in each row**.
+4. **Fill the slots.** Drag an app's icon from your desktop into a slot. Only the icons on your desktop count; to add an app, drag it there from the Start menu first.
 
 > [!NOTE]
 > The shelf finds a free spot on your icon grid by itself, near the bottom right if there's room. If it lands somewhere you don't like, pick a different **Where the shelf goes** in the settings, or press **Find a new spot**. If you ask for more slots than fit, the rows get wider first, then Clawd tells you how many fit.
@@ -61,17 +50,9 @@ He also notices:
 
 Everything Clawd Desk Buddy does works here too: petting, cookies, the ball, high fives, picking him up, naps, and the clock and battery visits. The ball rolls along the planks, and if you drop Clawd over the shelf he lands on the plank instead of in front of a slot. See [Clawd Desk Buddy](../clawd-desk-buddy#things-to-try).
 
-## Without Clawd's Eyes
-
-The wallpaper still works without the helper, but Clawd has to guess. He can see the mouse but not your icons. So a drag that ends inside a slot counts as "something's in there now" (its tag says `app?`), and a drag that starts in one and ends outside it empties it. He can't tell which app it is, so he just pokes it. He also can't spot new apps or the Recycle Bin being emptied.
-
-Without the helper, the shelf also assumes Windows' usual icon grid (medium icons). If yours is different, it may not line up with your icons. Clawd's Eyes fixes this, because it reads the real grid from Windows.
-
-Hover over the shelf to see whether Clawd's Eyes is on.
-
 ## Settings
 
-Right-click the wallpaper in Lively and choose **Customise**.
+They're on the right of the Live Wallpaper window while Clawd Desk Stations is selected, and every change shows on the desktop straight away.
 
 | Setting | Options | Default |
 | --- | --- | --- |
@@ -82,7 +63,7 @@ Right-click the wallpaper in Lively and choose **Customise**.
 | Show "drop any app here" hints | On or off | On |
 | Which screen this wallpaper is on | Automatic, Main screen, Screen 2, Screen 3 | Automatic |
 | Background | Paper, Graph paper, Midnight terminal, Dunes, Clay glow, Your own picture | Graph paper |
-| Your own picture | Any picture you add with the **+** button | Claude Dunes at sunset |
+| Your own picture | Any picture you add with the **+** tile under the pictures | Claude Dunes at sunset |
 | Appearance | Match Windows, Light, Dark, Follow the clock | Match Windows |
 | Clawd size | Tiny, Small, Medium | Tiny |
 | Your cursor | Ignore it, Look at it, Follow it when it stops, Chase it everywhere | Follow it when it stops |
@@ -101,24 +82,24 @@ Right-click the wallpaper in Lively and choose **Customise**.
 
 **Clawd size:** the shelf leaves room for him, so a bigger Clawd gets wider ladders.
 
-**Which screen:** with more than one screen, Clawd's Eyes asks Lively which screen the wallpaper is on. If you show the wallpaper on several screens at once, pick the screen for each one by hand.
+**Which screen:** Automatic works it out by itself. Set it by hand only if the shelf lines up with the wrong screen's icons.
 
-## About Clawd's Eyes
+## How Clawd sees your icons
 
-Clawd's Eyes is a short PowerShell script (`clawd-eyes.ps1`) that you can open and read. About once a second it:
+Live Wallpaper has Clawd's Eyes built in. While this wallpaper is showing, about once a second it:
 
 1. Asks Windows for the names and grid positions of your desktop icons, and how many items are in the Recycle Bin.
 2. Works out what kind of app each shortcut opens (browser, music, game, code, chat, notes, art, video and so on).
-3. Writes the result to `clawd-eyes-data.js` inside the wallpaper's folder in Lively's library, where the wallpaper reads it.
+3. Hands that to the wallpaper, in memory. Nothing is written to disk.
 
-It only reads. It never moves, opens or changes your icons or files. File and folder names are never written out, only app names. Nothing leaves your PC.
+It only reads. It never moves, opens or changes your icons or files. File and folder names are never passed on, only app names. Nothing leaves your PC. It stops by itself when you switch to another wallpaper.
 
-- **Stop it:** right-click the Clawd in the system tray and choose **Quit**. The wallpaper switches back to guessing.
-- **Start it with Windows:** right-click the tray Clawd and tick **Start with Windows**. This adds a shortcut to your Startup folder; untick it to remove the shortcut.
-- **If something's wrong:** problems are written to `clawd-eyes.log` in your temp folder (type `%TEMP%` in the File Explorer address bar).
+## Using Lively instead?
 
-> [!TIP]
-> If Windows won't run **Start Clawd Eyes.cmd** after you download it, right-click `Clawd-Eyes.zip`, choose **Properties**, tick **Unblock**, click **OK**, and unzip it again.
+In [Lively Wallpaper](https://github.com/rocksdanister/lively) this wallpaper needs two downloads:
+
+- [Clawd-Desk-Stations.zip](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-desk-stations/Clawd-Desk-Stations.zip): drag it (don't unzip it) onto Lively's window and click its tile. Set Lively's **Settings > Wallpaper > Wallpaper input** to **Mouse**.
+- [Clawd-Eyes.zip](https://github.com/Hirukadeven07/Live-Wallpaper/raw/main/wallpapers/clawd-desk-stations/Clawd-Eyes.zip), the helper that lets Clawd see your icons under Lively: unzip it somewhere you'll keep it and double-click **Start Clawd Eyes.cmd**. It sits in the tray; right-click it for **Start with Windows** and **Quit**. If Windows won't run it, right-click the zip, choose **Properties**, tick **Unblock**, and unzip it again. Without it, Clawd guesses from your mouse drags (slots show `app?`). Problems go to `clawd-eyes.log` in `%TEMP%`.
 
 ## Notes
 

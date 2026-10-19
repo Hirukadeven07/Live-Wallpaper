@@ -27,7 +27,8 @@
     "min": 0,
     "max": 300,
     "step": 10,
-    "text": "Dune motion (%)"
+    "text": "Dune motion",
+    "unit": "%"
   },
   "fps": {
     "type": "dropdown",
