@@ -26,7 +26,6 @@ const BUILTIN_ORDER: &[&str] = &[
     "clawd-desk-buddy",
     "clawd-desk-stations",
     "clawd-tunes",
-    "scarab-trail",
 ];
 
 /// Built-ins that play with the mouse, so the app can say so.

@@ -2,7 +2,7 @@
 
 ## What the license covers
 
-The [PolyForm Noncommercial License 1.0.0](LICENSE) covers only the original work in this repository: the wallpaper code, the dune scenes and their colors, the Scarab Trail scene and its Scarab 110 vehicle design, the settings files, the stills and thumbnails as images of those scenes, the READMEs, and the Live Wallpaper app in `app/` (its code, window and icon). You may use, copy and share that work for any noncommercial purpose, as the license describes.
+The [PolyForm Noncommercial License 1.0.0](LICENSE) covers only the original work in this repository: the wallpaper code, the dune scenes and their colors, the settings files, the stills and thumbnails as images of that scene, the READMEs, and the Live Wallpaper app in `app/` (its code, window and icon). You may use, copy and share that work for any noncommercial purpose, as the license describes.
 
 ## What the license does not cover
 
@@ -17,10 +17,6 @@ Those materials are included only so friends can enjoy the wallpapers on their o
 ## Spotify
 
 **Clawd Tunes** works with the Spotify app through the media controls Windows gives every app. Spotify is a trademark of Spotify AB, and this project is not made, endorsed or sponsored by Spotify. The song names and covers it shows come from your own Spotify app while it runs and aren't part of this repository.
-
-## Scarab Trail
-
-**Scarab Trail** has no Anthropic material. The Scarab 110 is a made-up vehicle: it isn't a real model and isn't connected to any vehicle maker. The low-poly, pastel look is a nod to off-road games such as Over the Hill by Funselektor; this project isn't connected to that game or its makers, and nothing from it is included.
 
 ## The app
 

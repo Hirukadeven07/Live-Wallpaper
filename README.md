@@ -60,7 +60,6 @@ All of these come inside the app. Click a name for more about it: what to try, e
 | <a href="wallpapers/clawd-desk-buddy"><img src="wallpapers/clawd-desk-buddy/source/thumbnail.png" width="260" alt="Clawd Desk Buddy"></a> | **[Clawd Desk Buddy](wallpapers/clawd-desk-buddy)** | A tiny Clawd who lives on your desktop. He follows your cursor, reacts to clicks, taps the clock and battery on the taskbar, and naps when you're away. Pet him, feed him cookies, play ball, high-five him. Five backgrounds, or use your own picture. |
 | <a href="wallpapers/clawd-desk-stations"><img src="wallpapers/clawd-desk-stations/source/thumbnail.png" width="260" alt="Clawd Desk Stations"></a> | **[Clawd Desk Stations](wallpapers/clawd-desk-stations)** | A shelf of slots on your desktop icon grid, as many as you like. Drag any app's icon in and Clawd works out what it is and climbs over to play with it: he surfs, dances, games, codes, chats, paints and watches. |
 | <a href="wallpapers/clawd-tunes"><img src="wallpapers/clawd-tunes/source/thumbnail.png" width="260" alt="Clawd Tunes"></a> | **[Clawd Tunes](wallpapers/clawd-tunes)** | A music player for Spotify on your desktop, with Clawd dancing on top in his headphones. Five player styles whose buttons really control Spotify. He reads out each new song, freezes when you pause, goes wild when the beat drops, and presses buttons when you throw him at them. |
-| <a href="wallpapers/scarab-trail"><img src="wallpapers/scarab-trail/source/thumbnail.png" width="260" alt="Scarab Trail"></a> | **[Scarab Trail](wallpapers/scarab-trail)** | A low-poly 3D off-road trip from morning to night. A made-up overland pickup climbs a rocky trail, gets stuck in the mud and winches itself out, crosses a river, and pulls into camp at sunset where friends sit by the fire. |
 
 ## What it does
 
@@ -135,7 +134,7 @@ Right-click the desktop, open **View**, turn **Auto arrange icons** off and **Al
 
 <br>
 
-Set the wallpaper's **Frame rate** to **15 fps (battery saver)**. For Scarab Trail you can also set **Render quality** to **Battery saver** and turn **Shadows** off. Or turn on **Pause on battery power** in the app's settings.
+Set the wallpaper's **Frame rate** to **15 fps (battery saver)**. Or turn on **Pause on battery power** in the app's settings.
 
 </details>
 
@@ -183,4 +182,4 @@ The app is written in Rust and lives in [app/](app). [app/README.md](app/README.
 
 These are unofficial fan wallpapers and an unofficial fan app. You can use and share them for noncommercial purposes under the [PolyForm Noncommercial License 1.0.0](LICENSE).
 
-The Claude spark and the Clawd character belong to Anthropic, which is not affiliated with or endorsing this project, and they are not covered by that license. Keep them to personal use. Scarab Trail doesn't use any of them. Details are in [NOTICE.md](NOTICE.md).
+The Claude spark and the Clawd character belong to Anthropic, which is not affiliated with or endorsing this project, and they are not covered by that license. Keep them to personal use. Details are in [NOTICE.md](NOTICE.md).
