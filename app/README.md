@@ -7,7 +7,7 @@ It's one `LiveWallpaper.exe` with every wallpaper built in: open it, click a wal
 
 ## What it does
 
-- **No importing.** All six wallpapers come inside the app. Click one and it's on your desktop.
+- **No importing.** All five wallpapers come inside the app. Click one and it's on your desktop.
 - **Settings next to the wallpaper.** Every change shows on the desktop as you make it, and is saved straight away.
 - **No helpers to set up.** Clawd's Eyes (desktop icons for Clawd Desk Stations) and Clawd's Ears (Spotify for
   Clawd Tunes) are built in. They only run while those wallpapers are showing.
